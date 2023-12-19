@@ -1,3 +1,6 @@
+// import { Link } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+
 export const sidebarItems = [
   {
     label: "FUENTES ABIERTAS",
@@ -5,23 +8,26 @@ export const sidebarItems = [
       {
         label: "Nuevo",
         icon: "pi pi-fw pi-plus",
-        command: () => {
-          console.log("Nuevo");
-        },
+        navigate: "/open-source-new",
+        // command: () => {
+        //   console.log("Nuevo");
+        // },
       },
       {
-        label: "Listado",
+        label: "Administrar",
         icon: "pi pi-fw pi-list",
-        command: () => {
-          console.log("Listado");
-        },
+        navigate: "/open-source-admin",
+        // command: () => {
+        //   console.log("Listado");
+        // },
       },
       {
-        label: "Listado cards",
+        label: "Listado (clientes)",
         icon: "pi pi-fw pi-th-large",
-        command: () => {
-          console.log("Listado cards");
-        },
+        navigate: "/open-source-pretty-list",
+        // command: () => {
+        //   console.log("Listado cards");
+        // },
       },
     ],
   },

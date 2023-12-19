@@ -3,6 +3,7 @@ import { Menubar } from "primereact/menubar";
 import { Button } from "primereact/button";
 import { Menu } from "primereact/menu";
 import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 import { authenticateService } from "../service/authenticateService";
 import { sidebarItems } from "../config/configSidebar";
@@ -23,6 +24,16 @@ export const Dashboard = ({ children }) => {
     </>
   );
 
+  const sidebarItemsNavigate = sidebarItems.map((section) => ({
+    ...section,
+    items: section.items.map((item) => ({
+      ...item,
+      command: () => {
+        navigate(item.navigate);
+      },
+    })),
+  }));
+
   return (
     <>
       <Menubar
@@ -38,9 +49,9 @@ export const Dashboard = ({ children }) => {
         }
         className="bg-blue-700 fixed w-full z-10"
       />
-      <div className="flex h-screen bg-gray-100">
-        <div className="w-64 bg-white p-4 shadow-lg mt-7">
-          <Menu model={sidebarItems} className="text-sm" />
+      <div className="flex h-screen bg-white">
+        <div className="w-64 bg-gray-100 p-4 shadow-lg mt-7">
+          <Menu model={sidebarItemsNavigate} className="text-sm" />
         </div>
         <div className="flex-grow p-4 mt-7">{children}</div>
       </div>
