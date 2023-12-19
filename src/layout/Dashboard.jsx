@@ -19,7 +19,7 @@ export const Dashboard = ({ children }) => {
 
   const start = (
     <>
-      <h3 className="text-white ml-4"> {labels.title}</h3>
+      <span className="text-white ml-4 font-bold"> {labels.title}</span>
     </>
   );
 

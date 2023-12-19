@@ -1,4 +1,4 @@
 export const labels = {
-  title: "Fuentes Abiertas",
+  title: "FUENTES ABIERTAS",
   logout: "Salir",
 };
