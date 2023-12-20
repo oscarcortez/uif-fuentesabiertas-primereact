@@ -11,7 +11,7 @@ export class authenticateService {
     localStorage.removeItem("user");
   }
 
-  get currentUser() {
+  currentUser() {
     return JSON.parse(localStorage.getItem("user"));
   }
 
