@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { ProgressBar } from "primereact/progressbar";
 import classNames from "classnames";
+import { Toast } from "primereact/toast";
 
 import { useNavigate } from "react-router-dom";
 import {
@@ -18,10 +19,19 @@ import { authenticateService } from "../../service/authenticateService";
 
 export const Login = () => {
   const navigate = useNavigate();
-
+  const toast = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
+  const show = (message) => {
+    toast.current.show({
+      severity: "success",
+      summary: "Bienvenido",
+      detail: message,
+    });
+  };
+
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
@@ -36,8 +46,8 @@ export const Login = () => {
         const authService = new authenticateService();
         await authService.login(payload);
 
-        setSuccessMessage(labels.success + payload.username);
-
+        //setSuccessMessage(labels.success + payload.username);
+        show(payload.username);
         setTimeout(() => {
           navigate("/dashboard");
         }, submitDelay);
@@ -57,13 +67,13 @@ export const Login = () => {
   return (
     <>
       <div className="flex align-items-center justify-content-center h-screen">
-        <div className="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+        <div className="surface-card p-4 shadow-2 border-round w-full lg:w-4">
           <form
             onSubmit={formik.handleSubmit}
             className="pages-panel card flex flex-column"
           >
             <div className="text-center">
-              <img src="/public/uif-logo.png" alt="hyper" height={250} />
+              <img src="/uif-logo.png" alt="hyper" height={250} />
               <div className="text-900 text-3xl font-medium mb-3">
                 {labels.title}
               </div>
@@ -95,6 +105,7 @@ export const Login = () => {
                 <InputText
                   type="password"
                   id="password"
+                  autoComplete="current-password"
                   {...formik.getFieldProps("password")}
                   className={classNames("w-full", {
                     "p-invalid":
@@ -128,6 +139,7 @@ export const Login = () => {
             </div>
           </form>
         </div>
+        <Toast ref={toast} position="center" />
       </div>
     </>
   );

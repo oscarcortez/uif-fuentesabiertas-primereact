@@ -181,12 +181,13 @@ export const OpenSourceAdmin = () => {
           field="isSuscribed"
           header="Esta suscrito"
           sortable
+          body={(rowData) => (rowData.isSuscribed ? "Si" : "No")}
           filter
           filterPlaceholder="Suscrito"
         ></Column>
         <Column
           field="price"
-          header="Precio"
+          header="Precio $"
           sortable
           filter
           filterPlaceholder="Precio"

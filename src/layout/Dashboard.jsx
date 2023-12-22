@@ -3,6 +3,8 @@ import { Menubar } from "primereact/menubar";
 import { Button } from "primereact/button";
 import { Menu } from "primereact/menu";
 import { useNavigate } from "react-router-dom";
+import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup";
+import { useRef, useState } from "react";
 
 import { authenticateService } from "../service/authenticateService";
 import { sidebarItems } from "../config/configSidebar";
@@ -11,7 +13,8 @@ import { labels } from "../config/configNavbar";
 export const Dashboard = ({ children }) => {
   const authService = new authenticateService();
   const navigate = useNavigate();
-
+  const [visible, setVisible] = useState(false);
+  const buttonEl = useRef(null);
   const logout = () => {
     authService.logout();
     navigate("/login");
@@ -35,13 +38,23 @@ export const Dashboard = ({ children }) => {
 
   return (
     <>
+      <ConfirmPopup
+        target={buttonEl.current}
+        visible={visible}
+        onHide={() => setVisible(false)}
+        message="Estas seguro de salir?"
+        icon="pi pi-exclamation-triangle"
+        accept={logout}
+        reject={console.log("cancel")}
+      />
       <Menubar
         // model={items}
         start={start}
         end={
           <Button
+            ref={buttonEl}
             label={labels.logout}
-            onClick={logout}
+            onClick={() => setVisible(true)}
             icon="pi pi-sign-out"
             className="bg-blue-700 text-xs border-1 border-blue-700 hover:bg-blue-800"
           />
