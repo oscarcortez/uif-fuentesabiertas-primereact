@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import { ProgressBar } from "primereact/progressbar";
+
 import classNames from "classnames";
 import { Toast } from "primereact/toast";
 
@@ -21,13 +21,19 @@ export const Login = () => {
   const navigate = useNavigate();
   const toast = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
 
-  const show = (message) => {
+  const showSuccess = (message) => {
     toast.current.show({
       severity: "success",
       summary: "Bienvenido",
+      detail: message,
+    });
+  };
+
+  const showError = (message) => {
+    toast.current.show({
+      severity: "error",
+      summary: "Error",
       detail: message,
     });
   };
@@ -42,22 +48,19 @@ export const Login = () => {
         password: values.password,
       };
       try {
-        setErrorMessage("");
         const authService = new authenticateService();
         await authService.login(payload);
 
-        //setSuccessMessage(labels.success + payload.username);
-        show(payload.username);
+        showSuccess(labels.success + payload.username);
         setTimeout(() => {
           navigate("/dashboard");
         }, submitDelay);
       } catch (error) {
-        // console.log(error);
         const errorMessage = errorCodes[error.code];
         if (errorMessage) {
-          setErrorMessage(errorMessage);
+          showError(errorMessage);
         } else {
-          setErrorMessage(error.code);
+          showError(error.code);
         }
         setIsLoading(false);
       }
@@ -122,20 +125,10 @@ export const Login = () => {
               <Button
                 type="submit"
                 label={labels.submit}
+                loading={isLoading}
                 icon="pi pi-user"
                 className="w-full mt-6 mb-4"
               />
-              {isLoading ? (
-                <ProgressBar mode="indeterminate" style={{ height: "6px" }} />
-              ) : null}
-              {errorMessage !== "" ? (
-                <p className="text-sm text-red-300">{errorMessage}</p>
-              ) : null}
-              {successMessage !== "" ? (
-                <p className="text-sm text-green-500 font-bold">
-                  {successMessage}
-                </p>
-              ) : null}
             </div>
           </form>
         </div>
