@@ -3,18 +3,18 @@ import { Menubar } from "primereact/menubar";
 import { Button } from "primereact/button";
 import { Menu } from "primereact/menu";
 import { useNavigate } from "react-router-dom";
-import { ConfirmPopup, confirmPopup } from "primereact/confirmpopup";
+import { ConfirmPopup } from "primereact/confirmpopup";
 import { useRef, useState } from "react";
 
 import { authenticateService } from "../service/authenticateService";
-import { sidebarItems } from "../config/configSidebar";
-import { labels } from "../config/configNavbar";
+import { sidebarItems } from "../config/sidebarConfig";
+import { labels } from "../config/navbarConfig";
 
 export const Dashboard = ({ children }) => {
   const authService = new authenticateService();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
-  const buttonEl = useRef(null);
+  const refLogoutButton = useRef(null);
   const logout = () => {
     authService.logout();
     navigate("/login");
@@ -39,23 +39,25 @@ export const Dashboard = ({ children }) => {
   return (
     <>
       <ConfirmPopup
-        target={buttonEl.current}
+        target={refLogoutButton.current}
         visible={visible}
         onHide={() => setVisible(false)}
-        message="Estas seguro de salir?"
-        icon="pi pi-exclamation-triangle"
+        message={labels.logout.popupMessage}
+        icon={`pi pi-${labels.logout.popupIcon}`}
         accept={logout}
-        reject={console.log("cancel")}
+        acceptLabel={labels.logout.popupYes}
+        rejectLabel={labels.logout.popupNo}
+        // reject={}
       />
       <Menubar
         // model={items}
         start={start}
         end={
           <Button
-            ref={buttonEl}
-            label={labels.logout}
+            ref={refLogoutButton}
+            label={labels.logout.value}
             onClick={() => setVisible(true)}
-            icon="pi pi-sign-out"
+            icon={`pi pi-${labels.logout.icon}`}
             className="bg-blue-700 text-xs border-1 border-blue-700 hover:bg-blue-800"
           />
         }
