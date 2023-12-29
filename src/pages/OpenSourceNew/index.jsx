@@ -1,6 +1,5 @@
-import axios from "axios";
 import classNames from "classnames";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 
 import { InputText } from "primereact/inputtext";
@@ -11,44 +10,39 @@ import { Checkbox } from "primereact/checkbox";
 import { InputTextarea } from "primereact/inputtextarea";
 import { BreadCrumb } from "primereact/breadcrumb";
 
-import { authenticateService } from "../../service/authenticateService";
+import catalogService from "../../service/catalogService";
+import openSourceService from "../../service/openSourceService";
 
 import {
   initialValues,
   validationSchema,
   labels,
   errorCodes,
-} from "../../config/configOpenSourceNew";
+} from "../../config/openSourceNewConfig";
 
 export const OpenSourceNew = () => {
-  const typeSources = [
-    { name: "Identificacion de personas", code: "76498" },
-    { name: "Perfil economico de la empresa", code: "76501" },
-    { name: "Profesionales", code: "76504" },
-  ];
-
   const items = [{ label: "Fuentes Abiertas" }, { label: "Nuevo" }];
   const home = { icon: "pi pi-home", url: "/" };
-  const authService = new authenticateService();
-  // const navigate = useNavigate();
+
+  const [catalogTypeOpenSource, setCatalogTypeOpenSource] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      setCatalogTypeOpenSource(
+        await catalogService.findAllTipoFuentesAbiertasForDdl()
+      );
+    })();
+  }, []);
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
       setIsLoading(true);
-      const response = authService.currentUser();
-      console.log("response", response.token);
-      //console.log("values", values);
-
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${response.token}`,
-      };
 
       const payload = {
         description: values.description,
@@ -63,10 +57,7 @@ export const OpenSourceNew = () => {
 
       try {
         setErrorMessage("");
-        await axios.post("http://localhost:8075/api/v1/opensources", payload, {
-          headers,
-        });
-
+        openSourceService.create(payload);
         setSuccessMessage(labels.success);
         setTimeout(() => {
           setSuccessMessage("");
@@ -87,11 +78,7 @@ export const OpenSourceNew = () => {
 
   return (
     <>
-      <BreadCrumb
-        model={items}
-        home={home}
-        className="text-sm" //  bg-gray-200 w-full h-10 top-0 left-0 m-0 p-0
-      />
+      <BreadCrumb model={items} home={home} className="text-sm" />
 
       <div className="flex align-items-center justify-content-center mt-6">
         <div className="surface-card p-4 w-full lg:w-6 bg-blue-800">
@@ -206,7 +193,7 @@ export const OpenSourceNew = () => {
                   name="typeSourceId"
                   value={formik.values.typeSourceId}
                   onChange={formik.handleChange}
-                  options={typeSources}
+                  options={catalogTypeOpenSource}
                   optionLabel="name"
                   className="w-full"
                 />
