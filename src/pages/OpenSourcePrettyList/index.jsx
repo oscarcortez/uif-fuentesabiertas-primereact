@@ -1,4 +1,4 @@
-import axios from "axios";
+//import axios from "axios";
 
 import { BreadCrumb } from "primereact/breadcrumb";
 import { Card } from "primereact/card";
@@ -6,12 +6,12 @@ import { TabView, TabPanel } from "primereact/tabview";
 import { Tag } from "primereact/tag";
 import { Divider } from "primereact/divider";
 import { Button } from "primereact/button";
-import { BO } from "country-flag-icons/react/3x2";
-import { Message } from "primereact/message";
+// import { BO } from "country-flag-icons/react/3x2";
+// import { Message } from "primereact/message";
 
 import { useState, useEffect } from "react";
-import { authenticateService } from "../../service/authenticateService";
-
+//import { authenticateService } from "../../service/authenticateService";
+import openSourceService from "../../service/openSourceService";
 import "./index.css";
 
 export const OpenSourcePrettyList = () => {
@@ -24,23 +24,9 @@ export const OpenSourcePrettyList = () => {
   const [openSourceList, setOpenSourceList] = useState([]);
 
   useEffect(() => {
-    const authService = new authenticateService();
-    const response = authService.currentUser();
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${response.token}`,
-    };
-    axios
-      .get(
-        `http://localhost:8075/api/v1/opensources/page?nroPage=1&pageSize=50`,
-        { headers }
-      )
-      .then((response) => {
-        setOpenSourceList(response.data);
-        //console.log("posts", openSourceList.data.dataList);
-        console.log("openSourceList", response.data);
-        //console.log("openSourceList");
-      });
+    (async () => {
+      setOpenSourceList(await openSourceService.findAll());
+    })();
   }, []);
 
   return (

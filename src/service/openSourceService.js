@@ -1,18 +1,30 @@
 import axios from "axios";
 import { authenticateService } from "./authenticateService";
-export class openSourceService {
-  async findAll() {
-    const authService = new authenticateService();
-    const responseAuth = authService.currentUser();
+import { API_ENDPOINTS } from "../config/apiConfig";
 
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${responseAuth.token}`,
-    };
-    const response = await axios.get(
-      `http://localhost:8075/api/v1/opensources/page?nroPage=1&pageSize=50`,
-      { headers }
-    );
+class openSourceService {
+  constructor() {
+    const authService = new authenticateService();
+    this.getHeaders = authService.getHeaders();
+  }
+
+  async findAll(nroPage = 1, pageSize = 50) {
+    const response = await axios.get(API_ENDPOINTS.opensources_page, {
+      headers: this.getHeaders,
+      params: {
+        page: nroPage,
+        size: pageSize,
+      },
+    });
+    return response.data;
+  }
+
+  async create(payload) {
+    const response = await axios.post(API_ENDPOINTS.opensources, payload, {
+      headers: this.getHeaders,
+    });
     return response.data;
   }
 }
+
+export default new openSourceService();

@@ -1,8 +1,9 @@
 import axios from "axios";
+import { API_ENDPOINTS } from "../config/apiConfig";
 
 export class authenticateService {
   async login(payload) {
-    const res = await axios.post("http://localhost:8075/authenticate", payload);
+    const res = await axios.post(API_ENDPOINTS.authenticate, payload);
     localStorage.setItem("user", JSON.stringify(res.data));
     return res.data;
   }
@@ -17,5 +18,16 @@ export class authenticateService {
 
   isLoggedIn() {
     return !!localStorage.getItem("user");
+  }
+
+  getToken() {
+    return JSON.parse(localStorage.getItem("user")).token;
+  }
+
+  getHeaders() {
+    return {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${this.getToken()}`,
+    };
   }
 }
