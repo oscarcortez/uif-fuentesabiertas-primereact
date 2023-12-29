@@ -13,7 +13,7 @@ import {
   labels,
   errorCodes,
   submitDelay,
-} from "../../config/configLogin";
+} from "../../config/loginConfig";
 
 import { authenticateService } from "../../service/authenticateService";
 
