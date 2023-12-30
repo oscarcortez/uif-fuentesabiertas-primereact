@@ -35,11 +35,9 @@ class openSourceService {
 
   async delete(id) {
     const response = await axios.patch(
-      `${API_ENDPOINTS.opensources_update_status}/${id}`,
-      { status: "I" },
-      {
-        headers: this.getHeaders,
-      }
+      `${API_ENDPOINTS.opensources_update_status}/${id}?status=I`,
+      {},
+      { headers: this.getHeaders }
     );
     return response.data;
   }
