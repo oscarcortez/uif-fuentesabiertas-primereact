@@ -25,6 +25,24 @@ class openSourceService {
     });
     return response.data;
   }
+
+  async findOne(id) {
+    const response = await axios.get(`${API_ENDPOINTS.opensources}/${id}`, {
+      headers: this.getHeaders,
+    });
+    return response.data;
+  }
+
+  async delete(id) {
+    const response = await axios.patch(
+      `${API_ENDPOINTS.opensources_update_status}/${id}`,
+      { status: "I" },
+      {
+        headers: this.getHeaders,
+      }
+    );
+    return response.data;
+  }
 }
 
 export default new openSourceService();

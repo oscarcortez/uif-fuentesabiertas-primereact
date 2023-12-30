@@ -13,6 +13,7 @@ import { Dashboard } from "./pages/Dashboard";
 import { OpenSourceNew } from "./pages/OpenSourceNew";
 import { OpenSourceAdmin } from "./pages/OpenSourceAdmin";
 import { OpenSourcePrettyList } from "./pages/OpenSourcePrettyList";
+import { OpenSourceItem } from "./pages/OpenSourceItem";
 
 const router = createBrowserRouter([
   { path: "/dashboard", element: <PrivateRoute component={Dashboard} /> },
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/open-source-admin",
     element: <PrivateRoute component={OpenSourceAdmin} />,
+  },
+  {
+    path: "/open-source/:id",
+    element: <PrivateRoute component={OpenSourceItem} />,
   },
   {
     path: "/open-source-pretty-list",

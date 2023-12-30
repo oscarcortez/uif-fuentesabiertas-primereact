@@ -6,5 +6,6 @@ export const API_ENDPOINTS = {
   authenticate: `${BASE_URL}/authenticate`,
   opensources_page: `${BASE_URL}${API_VERSION}/opensources/page`,
   opensources: `${BASE_URL}${API_VERSION}/opensources`,
+  opensources_update_status: `${BASE_URL}${API_VERSION}/opensources/update-status`,
   catalogs_list_tipo_fuentes_abiertas: `${BASE_URL}${API_VERSION}/catalogs/list-tipo-fuentes-abiertas`,
 };

@@ -8,6 +8,7 @@ export const initialValues = {
   url: "",
   typeSourceId: "",
   personId: 0,
+  goItem: false,
 };
 
 export const labels = {
@@ -20,6 +21,7 @@ export const labels = {
   personId: "PersonId",
   submit: "Crear",
   success: "Se registro correctamente",
+  goItem: "Visualizar item",
 };
 
 export const validationSchema = Yup.object({

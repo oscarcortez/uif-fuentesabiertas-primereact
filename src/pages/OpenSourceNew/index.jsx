@@ -1,14 +1,16 @@
+import { useState, useEffect, useRef } from "react";
 import classNames from "classnames";
-import { useState, useEffect } from "react";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import { ProgressBar } from "primereact/progressbar";
+import { ToggleButton } from "primereact/togglebutton";
 import { Dropdown } from "primereact/dropdown";
 import { Checkbox } from "primereact/checkbox";
 import { InputTextarea } from "primereact/inputtextarea";
 import { BreadCrumb } from "primereact/breadcrumb";
+import { Toast } from "primereact/toast";
 
 import catalogService from "../../service/catalogService";
 import openSourceService from "../../service/openSourceService";
@@ -21,14 +23,30 @@ import {
 } from "../../config/openSourceNewConfig";
 
 export const OpenSourceNew = () => {
+  const navigate = useNavigate();
+  const toast = useRef(null);
   const items = [{ label: "Fuentes Abiertas" }, { label: "Nuevo" }];
   const home = { icon: "pi pi-home", url: "/" };
 
   const [catalogTypeOpenSource, setCatalogTypeOpenSource] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+
+  const showSuccess = (message) => {
+    toast.current.show({
+      severity: "success",
+      summary: "Bienvenido",
+      detail: message,
+    });
+  };
+
+  const showError = (message) => {
+    toast.current.show({
+      severity: "error",
+      summary: "Error",
+      detail: message,
+    });
+  };
 
   useEffect(() => {
     (async () => {
@@ -42,6 +60,7 @@ export const OpenSourceNew = () => {
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
+      console.log("values", values);
       setIsLoading(true);
 
       const payload = {
@@ -53,26 +72,31 @@ export const OpenSourceNew = () => {
         typeSourceId: parseInt(values.typeSourceId.code),
         personId: 10,
       };
-      console.log("payload", payload);
+      //console.log("payload", payload);
 
       try {
-        setErrorMessage("");
-        openSourceService.create(payload);
-        setSuccessMessage(labels.success);
-        setTimeout(() => {
-          setSuccessMessage("");
-        }, 2500);
+        const response = await openSourceService.create(payload);
+        console.log("response", response);
+        console.log("response2", response.data);
+        console.log("goItem", values.goItem);
+        console.log("id", response.data.id);
+        if (values.goItem) {
+          navigate("/open-source/" + response.data.id);
+        }
+        showSuccess(labels.success);
       } catch (error) {
         const errorMessage = errorCodes[error.code];
-        if (errorMessage) {
-          setErrorMessage(errorMessage);
-        } else {
-          setErrorMessage(error.code);
-        }
+        showError(errorMessage ?? error.code);
         setIsLoading(false);
       }
       setIsLoading(false);
       resetForm();
+
+      // console.log('id', response);
+
+      // if (values.goItem) {
+      //   navigate("/openSource/");
+      // }
     },
   });
 
@@ -209,7 +233,7 @@ export const OpenSourceNew = () => {
                 </label>
               </div>
 
-              <span className="p-float-label w-full">
+              <span className="p-float-label w-full mb-5">
                 <Checkbox
                   inputId="isSuscribed"
                   name="isSuscribed"
@@ -218,27 +242,26 @@ export const OpenSourceNew = () => {
                 />
                 <label htmlFor="isSuscribed"> {labels.isSuscribed}</label>
               </span>
-
+              <div className="p-float-label w-full mb-5">
+                <ToggleButton
+                  id="goItem"
+                  name="goItem"
+                  checked={formik.values.goItem}
+                  onChange={formik.handleChange}
+                />
+                <label htmlFor="goItem"> {labels.goItem}</label>
+              </div>
               <Button
                 type="submit"
                 label={labels.submit}
-                icon="pi pi-globe"
+                loading={isLoading}
+                icon="pi pi-plus"
                 className="w-full mt-6 mb-4"
               />
-              {isLoading ? (
-                <ProgressBar mode="indeterminate" style={{ height: "6px" }} />
-              ) : null}
-              {errorMessage !== "" ? (
-                <p className="text-sm text-red-300">{errorMessage}</p>
-              ) : null}
-              {successMessage !== "" ? (
-                <p className="text-sm text-green-500 font-bold">
-                  {successMessage}
-                </p>
-              ) : null}
             </div>
           </form>
         </div>
+        <Toast ref={toast} position="center" />
       </div>
     </>
   );
