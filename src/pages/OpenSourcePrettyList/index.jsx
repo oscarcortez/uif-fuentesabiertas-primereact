@@ -1,17 +1,14 @@
-//import axios from "axios";
-
 import { BreadCrumb } from "primereact/breadcrumb";
 import { Card } from "primereact/card";
 import { TabView, TabPanel } from "primereact/tabview";
 import { Tag } from "primereact/tag";
 import { Divider } from "primereact/divider";
 import { Button } from "primereact/button";
-// import { BO } from "country-flag-icons/react/3x2";
-// import { Message } from "primereact/message";
 
 import { useState, useEffect } from "react";
-//import { authenticateService } from "../../service/authenticateService";
+
 import openSourceService from "../../service/openSourceService";
+
 import "./index.css";
 
 export const OpenSourcePrettyList = () => {
@@ -53,7 +50,6 @@ export const OpenSourcePrettyList = () => {
                     className="bg-red-300"
                   ></Tag>
                 )}
-                {/* {<BO title="United States" style={{ width: "30px" }} />} */}
               </>
             }
           >

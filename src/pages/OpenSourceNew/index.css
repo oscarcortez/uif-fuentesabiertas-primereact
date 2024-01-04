@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.container .column {
+    flex: 50%;
+}
+
+@media (max-width: 700px) {
+    .container .column {
+        flex: 100%;
+    }
+}
+
+.my-panel .p-panel-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

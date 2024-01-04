@@ -1,11 +1,10 @@
 import axios from "axios";
-import { authenticateService } from "./authenticateService";
+import { getHeaders } from "./authenticateService";
 import { API_ENDPOINTS } from "../config/apiConfig";
 
 class catalogService {
   constructor() {
-    const authService = new authenticateService();
-    this.getHeaders = authService.getHeaders();
+    this.getHeaders = getHeaders();
   }
 
   async findAllTipoFuentesAbiertas() {
@@ -25,6 +24,21 @@ class catalogService {
         headers: this.getHeaders,
       }
     );
+
+    const result = await response.data.data.map((item) => {
+      return {
+        code: item.id,
+        name: item.descripcion,
+      };
+    });
+
+    return result;
+  }
+
+  async findAllWorkflowForDdl() {
+    const response = await axios.get(API_ENDPOINTS.catalogs_list_workflow, {
+      headers: this.getHeaders,
+    });
 
     const result = await response.data.data.map((item) => {
       return {

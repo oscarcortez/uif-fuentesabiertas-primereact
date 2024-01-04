@@ -5,12 +5,12 @@ import { Navigate } from "react-router-dom";
 // import { Button } from "primereact/button";
 // import { Menu } from "primereact/menu";
 import { Dashboard } from "../layout/Dashboard";
-import { authenticateService } from "../service/authenticateService";
+import { isLoggedIn } from "../service/authenticateService";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const authService = new authenticateService();
+  //const authService = new authenticateService();
 
-  return authService.isLoggedIn() ? (
+  return isLoggedIn() ? (
     <>
       <Dashboard>
         <Component {...rest} />

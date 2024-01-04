@@ -57,7 +57,10 @@ export const OpenSourceItem = () => {
       >
         <TabView className="">
           <TabPanel header="Descripcion">
-            <p className="m-0">{openSourceItem.description}</p>
+            <div
+              className="m-0"
+              dangerouslySetInnerHTML={{ __html: openSourceItem.description }}
+            />
           </TabPanel>
           <TabPanel header="Detalles" className="">
             <div className="m-0 ">

@@ -15,7 +15,7 @@ import {
   submitDelay,
 } from "../../config/loginConfig";
 
-import { authenticateService } from "../../service/authenticateService";
+import { login } from "../../service/authenticateService";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -48,9 +48,9 @@ export const Login = () => {
         password: values.password,
       };
       try {
-        const authService = new authenticateService();
-        await authService.login(payload);
-
+        // const authService = new authenticateService();
+        // await authService.login(payload);
+        await login(payload);
         showSuccess(labels.success + payload.username);
         setTimeout(() => {
           navigate("/dashboard");

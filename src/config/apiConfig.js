@@ -8,4 +8,5 @@ export const API_ENDPOINTS = {
   opensources: `${BASE_URL}${API_VERSION}/opensources`,
   opensources_update_status: `${BASE_URL}${API_VERSION}/opensources/update-status`,
   catalogs_list_tipo_fuentes_abiertas: `${BASE_URL}${API_VERSION}/catalogs/list-tipo-fuentes-abiertas`,
+  catalogs_list_workflow: `${BASE_URL}${API_VERSION}/catalogs/list-workflow`,
 };

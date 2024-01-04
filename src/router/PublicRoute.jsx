@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
-import { authenticateService } from "../service/authenticateService";
+import { isLoggedIn } from "../service/authenticateService";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const authService = new authenticateService();
+  // const authService = new authenticateService();
 
-  return !authService.isLoggedIn() ? (
+  return !isLoggedIn() ? (
     <Component {...rest} />
   ) : (
     <Navigate to="/dashboard" replace />

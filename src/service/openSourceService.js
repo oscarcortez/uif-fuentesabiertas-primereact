@@ -1,11 +1,10 @@
 import axios from "axios";
-import { authenticateService } from "./authenticateService";
+import { getHeaders } from "./authenticateService";
 import { API_ENDPOINTS } from "../config/apiConfig";
 
 class openSourceService {
   constructor() {
-    const authService = new authenticateService();
-    this.getHeaders = authService.getHeaders();
+    this.getHeaders = getHeaders();
   }
 
   async findAll(nroPage = 1, pageSize = 50) {

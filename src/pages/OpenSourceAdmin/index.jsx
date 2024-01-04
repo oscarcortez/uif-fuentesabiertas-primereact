@@ -27,7 +27,8 @@ export const OpenSourceAdmin = () => {
   };
 
   const editAction = (rowData) => {
-    console.log("editAction", rowData);
+    navigate("/open-source-edit/" + rowData.id);
+    //console.log("editAction", rowData);
   };
 
   const viewAction = (rowData) => {
