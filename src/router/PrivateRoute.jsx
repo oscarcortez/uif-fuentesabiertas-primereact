@@ -1,18 +1,26 @@
 import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
 
-// import { Menubar } from "primereact/menubar";
-// import { Button } from "primereact/button";
-// import { Menu } from "primereact/menu";
 import { Dashboard } from "../layout/Dashboard";
-import { isLoggedIn } from "../service/authenticateService";
+import { isLoggedIn, getUsername } from "../service/authenticateService";
+
+import {
+  topbarItems,
+  leftbarItems,
+  rightbarItems,
+} from "../config/dashboardConfig";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   //const authService = new authenticateService();
 
   return isLoggedIn() ? (
     <>
-      <Dashboard>
+      <Dashboard
+        username={getUsername()}
+        topbarItems={topbarItems}
+        leftbarItems={leftbarItems}
+        rightbarItems={rightbarItems}
+      >
         <Component {...rest} />
       </Dashboard>
     </>

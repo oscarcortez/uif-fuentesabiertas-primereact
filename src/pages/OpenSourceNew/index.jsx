@@ -5,31 +5,22 @@ import { useNavigate } from "react-router-dom";
 
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-// import { ToggleButton } from "primereact/togglebutton";
 import { Dropdown } from "primereact/dropdown";
-// import { Checkbox } from "primereact/checkbox";
 import { InputNumber } from "primereact/inputnumber";
-// import { InputTextarea } from "primereact/inputtextarea";
 import { InputSwitch } from "primereact/inputswitch";
 import { Panel } from "primereact/panel";
 import { BreadCrumb } from "primereact/breadcrumb";
 import { Editor } from "primereact/editor";
 import { Toast } from "primereact/toast";
-import { Ripple } from "primereact/ripple";
-// import { ChevronDownIcon } from "primereact/icons/chevrondown";
-// import { ChevronRightIcon } from "primereact/icons/chevronright";
 
 import ReactCountryFlag from "react-country-flag";
 
 import catalogService from "../../service/catalogService";
 import openSourceService from "../../service/openSourceService";
 
-// import { Editor } from "react-draft-wysiwyg";
-// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
 import {
   initialValues,
-  validationSchema,
+  // validationSchema,
   labels,
   errorCodes,
 } from "../../config/openSourceNewConfig";
@@ -54,7 +45,10 @@ export const OpenSourceNew = () => {
   const countryTemplate = ({ code, name }) => {
     return (
       <div className="p-clearfix">
-        <ReactCountryFlag countryCode={code} svg className="mr-2" />
+        {code !== "" && (
+          <ReactCountryFlag countryCode={code} svg className="mr-2" />
+        )}
+
         <span
           style={{
             float: "center",
@@ -123,7 +117,7 @@ export const OpenSourceNew = () => {
     // validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
       console.log("values", values);
-      // setIsLoading(true);
+      setIsLoading(true);
 
       const payload = {
         description: values.description,
@@ -136,13 +130,8 @@ export const OpenSourceNew = () => {
         personId: 10,
       };
 
-      // console.log("payload", payload);
       try {
         const response = await openSourceService.create(payload);
-        // console.log("response", response);
-        // console.log("response2", response.data);
-        // console.log("goItem", values.goItem);
-        // console.log("id", response.data.id);
         if (values.goItem) {
           navigate("/open-source/" + response.data.id);
         }
@@ -165,11 +154,8 @@ export const OpenSourceNew = () => {
         onSubmit={formik.handleSubmit}
         className="pages-panel card flex flex-column"
       >
-        <div className="bg-black-alpha-10 container">
-          <div
-            className="surface-card p-4 w-full bg-blue-800 column"
-            style={{ flex: "2" }}
-          >
+        <div className="form-container">
+          <div className="form-column">
             <div className="p-inputgroup flex-1 mb-3">
               <span className="p-inputgroup-addon">
                 <i className="pi pi-globe"></i>
@@ -266,12 +252,10 @@ export const OpenSourceNew = () => {
                 id="countryCode"
                 name="countryCode"
                 value={formik.values.countryCode}
-                //onChange={formik.handleChange}
                 onChange={(e) => formik.setFieldValue("countryCode", e.value)}
                 options={countries}
                 optionLabel="name"
-                // placeholder={labels.countryCodePlaceHolder}
-                placeholder="Select a City"
+                // placeholder={name: "Seleccione un Pais"}
                 className="w-full"
                 style={{ width: "100%" }}
                 itemTemplate={countryTemplate}
@@ -307,32 +291,6 @@ export const OpenSourceNew = () => {
                 />
               </span>
             </div>
-
-            {/* <span className="p-float-label w-full mb-5">
-                <Checkbox
-                  inputId="isSuscribed"
-                  name="isSuscribed"
-                  checked={formik.values.isSuscribed}
-                  onChange={formik.handleChange}
-                />
-                <label htmlFor="isSuscribed"> {labels.isSuscribed}</label>
-              </span> */}
-            {/* <div className="p-float-label w-full mb-5">
-                <ToggleButton
-                  id="goItem"
-                  name="goItem"
-                  checked={formik.values.goItem}
-                  onChange={formik.handleChange}
-                />
-                <label htmlFor="goItem"> {labels.goItem}</label>
-              </div> */}
-            {/* <Button
-              type="submit"
-              label={labels.submit}
-              loading={isLoading}
-              icon="pi pi-plus"
-              className="w-full"
-            /> */}
           </div>
 
           <Toast ref={toast} position="center" />

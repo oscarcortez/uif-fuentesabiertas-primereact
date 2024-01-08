@@ -26,6 +26,13 @@ const getToken = () => {
   return null;
 };
 
+const getUsername = () => {
+  if (isLoggedIn()) {
+    return JSON.parse(localStorage.getItem("user")).username;
+  }
+  return null;
+};
+
 const getHeaders = () => {
   if (!isLoggedIn()) return {};
 
@@ -35,4 +42,12 @@ const getHeaders = () => {
   };
 };
 
-export { login, logout, currentUser, isLoggedIn, getToken, getHeaders };
+export {
+  login,
+  logout,
+  currentUser,
+  isLoggedIn,
+  getToken,
+  getHeaders,
+  getUsername,
+};
