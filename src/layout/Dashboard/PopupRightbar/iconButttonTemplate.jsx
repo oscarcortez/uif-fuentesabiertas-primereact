@@ -1,4 +1,4 @@
-import Button from "primereact/button";
+import { Button } from "primereact/button";
 import ReactCountryFlag from "react-country-flag";
 
 export const iconButtonTemplate = (icon) => {
