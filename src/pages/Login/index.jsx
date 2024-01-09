@@ -1,4 +1,7 @@
-import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+
+import { useRef } from "react";
 import { useFormik } from "formik";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
@@ -6,7 +9,8 @@ import { Button } from "primereact/button";
 import classNames from "classnames";
 import { Toast } from "primereact/toast";
 
-import { useNavigate } from "react-router-dom";
+import { showSuccess, showError } from "../../components/CustomToast";
+
 import {
   initialValues,
   validationSchema,
@@ -15,55 +19,40 @@ import {
   submitDelay,
 } from "../../config/loginConfig";
 
-import { login } from "../../service/authenticateService";
+import { login as loginService } from "../../service/authenticateService";
 
 export const Login = () => {
+  const loginMutation = useMutation({
+    mutationFn: (payload) => {
+      return loginService(payload);
+    },
+  });
+
   const navigate = useNavigate();
   const toast = useRef(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const showSuccess = (message) => {
-    toast.current.show({
-      severity: "success",
-      summary: "Bienvenido",
-      detail: message,
-    });
-  };
-
-  const showError = (message) => {
-    toast.current.show({
-      severity: "error",
-      summary: "Error",
-      detail: message,
-    });
-  };
 
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      setIsLoading(true);
       const payload = {
         username: values.email.split("@")[0],
         password: values.password,
       };
-      try {
-        // const authService = new authenticateService();
-        // await authService.login(payload);
-        await login(payload);
-        showSuccess(labels.success + payload.username);
-        setTimeout(() => {
-          navigate("/dashboard");
-        }, submitDelay);
-      } catch (error) {
-        const errorMessage = errorCodes[error.code];
-        if (errorMessage) {
-          showError(errorMessage);
-        } else {
-          showError(error.code);
-        }
-        setIsLoading(false);
-      }
+
+      loginMutation.mutate(payload, {
+        onSuccess: (data) => {
+          console.log(data);
+          showSuccess(toast, "Bienvenido", labels.success + payload.username);
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, submitDelay);
+        },
+        onError: (error) => {
+          const errorMessage = errorCodes[error.code];
+          showError(toast, "Error", errorMessage ?? error.code);
+        },
+      });
     },
   });
 
@@ -125,7 +114,7 @@ export const Login = () => {
               <Button
                 type="submit"
                 label={labels.submit}
-                loading={isLoading}
+                loading={loginMutation.isPending}
                 icon="pi pi-user"
                 className="w-full mt-6 mb-4"
               />
