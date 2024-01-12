@@ -3,7 +3,8 @@ import * as Yup from "yup";
 export const initialValues = {
   description: "",
   inputSearch: "",
-  price: "",
+  outputSearch: "",
+  price: "0",
   url: "",
   typeSourceId: "",
   countryCode: { name: "Seleccione un Pais", code: "" },
@@ -14,6 +15,7 @@ export const initialValues = {
 export const labels = {
   description: "Descripcion",
   inputSearch: "Valor de busqueda",
+  outputSearch: "Resultado de busqueda",
   price: "Precio",
   url: "Url",
   typeSourceId: "Tipo de fuente",
@@ -34,6 +36,10 @@ export const validationSchema = Yup.object({
   inputSearch: Yup.string("Ingresa el inputSearch").min(
     4,
     "inputSearch debe ser 4 caracteres o mas"
+  ),
+  outputSearch: Yup.string("Ingresa el outputSearch").min(
+    4,
+    "outputSearch debe ser 4 caracteres o mas"
   ),
   // .required("inputSearch requerido"),
   price: Yup.number("Ingresa el price").required("price requerido"),

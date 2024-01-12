@@ -12,6 +12,7 @@ import { Panel } from "primereact/panel";
 import { BreadCrumb } from "primereact/breadcrumb";
 import { Editor } from "primereact/editor";
 import { Toast } from "primereact/toast";
+import { Divider } from "primereact/divider";
 
 import ReactCountryFlag from "react-country-flag";
 
@@ -30,16 +31,16 @@ import "./index.css";
 export const OpenSourceNew = () => {
   const countries = [
     { name: "Seleccione un Pais", code: "" },
-    { name: "Australia", code: "AU" },
-    { name: "Brazil", code: "BR" },
-    { name: "China", code: "CN" },
-    { name: "Egypt", code: "EG" },
-    { name: "France", code: "FR" },
-    { name: "Germany", code: "DE" },
-    { name: "India", code: "IN" },
-    { name: "Japan", code: "JP" },
-    { name: "Spain", code: "ES" },
-    { name: "United States", code: "US" },
+    { name: "CHILE", code: "CL" },
+    { name: "PERU", code: "PE" },
+    { name: "SURINAME", code: "SR" },
+    { name: "PANAMA", code: "PA" },
+    { name: "EL SALVADOR", code: "SV" },
+    { name: "HONDURAS", code: "HN" },
+    { name: "PARAGUAY", code: "PY" },
+    { name: "TRINIDAD Y TOBAGO", code: "TT" },
+    { name: "GUATEMALA", code: "GT" },
+    { name: "VENEZUELA", code: "VE" },
   ];
 
   const countryTemplate = ({ code, name }) => {
@@ -149,7 +150,8 @@ export const OpenSourceNew = () => {
   return (
     <>
       <BreadCrumb model={items} home={home} className="text-sm" />
-
+      <h3 className="ml-3 text-gray-600">Nueva Fuente Abierta</h3>
+      <Divider />
       <form
         onSubmit={formik.handleSubmit}
         className="pages-panel card flex flex-column"
@@ -186,6 +188,23 @@ export const OpenSourceNew = () => {
                 className={classNames("w-full", {
                   "p-invalid":
                     formik.errors.inputSearch && formik.touched.inputSearch,
+                })}
+              />
+            </div>
+            <div className="p-inputgroup flex-1 mb-3">
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-search"></i>
+              </span>
+              <InputText
+                type="text"
+                id="outputSearch"
+                name="outputSearch"
+                placeholder={labels.outputSearch}
+                autoComplete="url"
+                {...formik.getFieldProps("outputSearch")}
+                className={classNames("w-full", {
+                  "p-invalid":
+                    formik.errors.outputSearch && formik.touched.outputSearch,
                 })}
               />
             </div>

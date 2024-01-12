@@ -7,6 +7,11 @@ export const labels = {
   password: "Password",
   submit: "Acceder",
   success: "Bienvenido: ",
+  error: "Error: ",
+};
+
+export const paths = {
+  headerImage: "/uif-logo.png",
 };
 
 export const submitDelay = 2000;
