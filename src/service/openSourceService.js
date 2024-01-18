@@ -25,7 +25,20 @@ class openSourceService {
     return response.data;
   }
 
-  async findOne(id) {
+  async update({ id, payload }) {
+    console.log("payload", payload);
+    console.log("id", id);
+    const response = await axios.put(
+      `${API_ENDPOINTS.opensources}/${id}`,
+      payload,
+      {
+        headers: this.getHeaders,
+      }
+    );
+    return response.data;
+  }
+
+  async findById(id) {
     const response = await axios.get(`${API_ENDPOINTS.opensources}/${id}`, {
       headers: this.getHeaders,
     });
@@ -37,6 +50,16 @@ class openSourceService {
       `${API_ENDPOINTS.opensources_update_status}/${id}?status=I`,
       {},
       { headers: this.getHeaders }
+    );
+    return response.data;
+  }
+
+  async findAllByStatus(status) {
+    const response = await axios.get(
+      `${API_ENDPOINTS.opensources_find_all_by_status}/${status}`,
+      {
+        headers: this.getHeaders,
+      }
     );
     return response.data;
   }

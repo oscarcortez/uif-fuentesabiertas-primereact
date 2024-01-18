@@ -22,13 +22,15 @@ export const OpenSourceAdmin = () => {
 
   const deleteAction = async (rowData) => {
     const response = await openSourceService.delete(rowData.id);
+    //navigate("/open-source-admin");
     console.log("response", response);
-    console.log("deleteAction", rowData);
+    (async () => {
+      setOpenSourceList(await openSourceService.findAllByStatus("A"));
+    })();
   };
 
   const editAction = (rowData) => {
     navigate("/open-source-edit/" + rowData.id);
-    //console.log("editAction", rowData);
   };
 
   const viewAction = (rowData) => {
@@ -63,9 +65,10 @@ export const OpenSourceAdmin = () => {
 
   useEffect(() => {
     (async () => {
-      setOpenSourceList(await openSourceService.findAll());
+      setOpenSourceList(await openSourceService.findAllByStatus("A"));
     })();
   }, []);
+  console.log("openSourceList", openSourceList);
 
   const exportCSV = (selectionOnly) => {
     dt.current.exportCSV({ selectionOnly });
@@ -88,7 +91,7 @@ export const OpenSourceAdmin = () => {
       <BreadCrumb model={items} home={home} className="text-sm" />
       <Tooltip target=".export-buttons>button" position="bottom" />
       <DataTable
-        value={openSourceList.data ? openSourceList.data.dataList : []}
+        value={openSourceList ? openSourceList.data : []}
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         dataKey="id"
         ref={dt}
