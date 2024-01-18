@@ -7,7 +7,8 @@ export const initialValues = {
   price: "0",
   url: "",
   typeSourceId: "",
-  countryCode: { name: "Seleccione un Pais", code: "" },
+  // countryCode: { name: "Peru", code: "PE" },
+  countryCode: "",
   defaultWorkflowId: "",
   goItem: false,
 };
@@ -24,6 +25,7 @@ export const labels = {
   defaultWorkflowId: "Workflow",
   submit: "Crear",
   success: "Se registro correctamente",
+  error: "Error: ",
   goItem: "Visualizar item",
 };
 

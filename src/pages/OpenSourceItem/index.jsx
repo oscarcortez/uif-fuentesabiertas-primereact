@@ -24,7 +24,7 @@ export const OpenSourceItem = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await openSourceService.findOne(id);
+      const response = await openSourceService.findById(id);
       setOpenSourceItem(response.data);
       console.log("response.data", response.data);
     })();

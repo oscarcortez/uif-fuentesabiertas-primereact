@@ -1,0 +1,27 @@
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 50%;
+}
+
+.form-column {
+    flex: 50%;
+    padding: 1rem;
+    width: 100%;
+    /* background-color: #2c5282; */
+}
+
+@media (max-width: 790px) {
+    .form-container .form-column {
+        flex: 100%;
+    }
+}
+
+.my-panel .p-panel-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.p-fieldset .p-fieldset-content>* {
+    margin: 0;
+}
