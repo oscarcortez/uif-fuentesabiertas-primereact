@@ -1,23 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import classNames from "classnames";
+
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
-import { Dropdown } from "primereact/dropdown";
-import { InputNumber } from "primereact/inputnumber";
-import { InputSwitch } from "primereact/inputswitch";
-import { Panel } from "primereact/panel";
-import { BreadCrumb } from "primereact/breadcrumb";
-import { Editor } from "primereact/editor";
-import { Toast } from "primereact/toast";
-import { Divider } from "primereact/divider";
-
-import ReactCountryFlag from "react-country-flag";
+import { useMutation } from "@tanstack/react-query";
 
 import catalogService from "../../service/catalogService";
 import openSourceService from "../../service/openSourceService";
+import countryService from "../../service/countryService";
 
 import {
   initialValues,
@@ -27,77 +16,22 @@ import {
 } from "../../config/openSourceNewConfig";
 
 import "./index.css";
+import { OpenSourceForm } from "../../components/OpenSourceForm";
+import { showSuccess, showError } from "../../components/CustomToast";
 
 export const OpenSourceNew = () => {
-  const countries = [
-    { name: "Seleccione un Pais", code: "" },
-    { name: "CHILE", code: "CL" },
-    { name: "PERU", code: "PE" },
-    { name: "SURINAME", code: "SR" },
-    { name: "PANAMA", code: "PA" },
-    { name: "EL SALVADOR", code: "SV" },
-    { name: "HONDURAS", code: "HN" },
-    { name: "PARAGUAY", code: "PY" },
-    { name: "TRINIDAD Y TOBAGO", code: "TT" },
-    { name: "GUATEMALA", code: "GT" },
-    { name: "VENEZUELA", code: "VE" },
-  ];
-
-  const countryTemplate = ({ code, name }) => {
-    return (
-      <div className="p-clearfix">
-        {code !== "" && (
-          <ReactCountryFlag countryCode={code} svg className="mr-2" />
-        )}
-
-        <span
-          style={{
-            float: "center",
-            margin: ".5em .25em 0 0",
-          }}
-        >
-          {name}
-        </span>
-      </div>
-    );
-  };
-
-  const selectedCountryTemplate = (option) => {
-    if (!option) return;
-
-    return (
-      <div className="p-clearfix">
-        <ReactCountryFlag countryCode={option.code} svg className="mr-2" />
-        <span>{option.name}</span>
-      </div>
-    );
-  };
+  const createMutation = useMutation({
+    mutationFn: (payload) => {
+      return openSourceService.create(payload);
+    },
+  });
 
   const navigate = useNavigate();
   const toast = useRef(null);
-  const items = [{ label: "Fuentes Abiertas" }, { label: "Nuevo" }];
-  const home = { icon: "pi pi-home", url: "/" };
 
   const [catalogTypeOpenSource, setCatalogTypeOpenSource] = useState([]);
   const [catalogWorkflow, setCatalogWorkflow] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const showSuccess = (message) => {
-    toast.current.show({
-      severity: "success",
-      summary: "Bienvenido",
-      detail: message,
-    });
-  };
-
-  const showError = (message) => {
-    toast.current.show({
-      severity: "error",
-      summary: "Error",
-      detail: message,
-    });
-  };
+  const [catalogCountry, setCatalogCountry] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -105,216 +39,60 @@ export const OpenSourceNew = () => {
         await catalogService.findAllTipoFuentesAbiertasForDdl()
       );
     })();
-  }, []);
-
-  useEffect(() => {
     (async () => {
       setCatalogWorkflow(await catalogService.findAllWorkflowForDdl());
     })();
+  }, []);
+
+  useEffect(() => {
+    setCatalogCountry(countryService.findAllForDdl());
   }, []);
 
   const formik = useFormik({
     initialValues: initialValues,
     // validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      console.log("values", values);
-      setIsLoading(true);
-
       const payload = {
         description: values.description,
         inputSearch: values.inputSearch,
+        outputSearch: values.outputSearch,
         countryCode: values.countryCode.code,
-        workflowId: parseInt(values.workflowId.code),
+        //workflowId: parseInt(values.workflowId.code),
         price: parseFloat(values.price),
         url: values.url,
         typeSourceId: parseInt(values.typeSourceId.code),
-        personId: 10,
+        defaultWorkflowId: values.defaultWorkflowId.code,
       };
 
-      try {
-        const response = await openSourceService.create(payload);
-        if (values.goItem) {
-          navigate("/open-source/" + response.data.id);
-        }
-        showSuccess(labels.success);
-      } catch (error) {
-        const errorMessage = errorCodes[error.code];
-        showError(errorMessage ?? error.code);
-        setIsLoading(false);
-      }
-      setIsLoading(false);
-      resetForm();
+      createMutation.mutate(payload, {
+        onSuccess: (data) => {
+          if (values.goItem) {
+            setTimeout(() => {
+              navigate("/open-source/" + data.data.id);
+            }, 1000);
+          }
+          showSuccess(toast, labels.success, payload.url);
+          resetForm();
+        },
+        onError: (error) => {
+          const errorMessage = errorCodes[error.code];
+          showError(toast, labels.error, errorMessage ?? error.code);
+        },
+      });
     },
   });
 
   return (
     <>
-      <BreadCrumb model={items} home={home} className="text-sm" />
-      <h3 className="ml-3 text-gray-600">Nueva Fuente Abierta</h3>
-      <Divider />
-      <form
-        onSubmit={formik.handleSubmit}
-        className="pages-panel card flex flex-column"
-      >
-        <div className="form-container">
-          <div className="form-column">
-            <div className="p-inputgroup flex-1 mb-3">
-              <span className="p-inputgroup-addon">
-                <i className="pi pi-globe"></i>
-              </span>
-              <InputText
-                type="text"
-                id="url"
-                name="url"
-                placeholder={labels.url}
-                autoComplete="url"
-                {...formik.getFieldProps("url")}
-                className={classNames("w-full", {
-                  "p-invalid": formik.errors.url && formik.touched.url,
-                })}
-              />
-            </div>
-            <div className="p-inputgroup flex-1 mb-3">
-              <span className="p-inputgroup-addon">
-                <i className="pi pi-search"></i>
-              </span>
-              <InputText
-                type="text"
-                id="inputSearch"
-                name="inputSearch"
-                placeholder={labels.inputSearch}
-                autoComplete="url"
-                {...formik.getFieldProps("inputSearch")}
-                className={classNames("w-full", {
-                  "p-invalid":
-                    formik.errors.inputSearch && formik.touched.inputSearch,
-                })}
-              />
-            </div>
-            <div className="p-inputgroup flex-1 mb-3">
-              <span className="p-inputgroup-addon">
-                <i className="pi pi-search"></i>
-              </span>
-              <InputText
-                type="text"
-                id="outputSearch"
-                name="outputSearch"
-                placeholder={labels.outputSearch}
-                autoComplete="url"
-                {...formik.getFieldProps("outputSearch")}
-                className={classNames("w-full", {
-                  "p-invalid":
-                    formik.errors.outputSearch && formik.touched.outputSearch,
-                })}
-              />
-            </div>
-            <Editor
-              style={{ height: "320px" }}
-              value={formik.values.description}
-              onTextChange={(e) => {
-                formik.setFieldValue("description", e.htmlValue);
-              }}
-            />
-          </div>
-
-          <div
-            className="surface-card p-4 w-full bg-blue-800 column"
-            style={{ flex: "1" }}
-          >
-            <Panel header="Precio" className="my-panel">
-              <div className="p-inputgroup flex-1">
-                <span className="p-inputgroup-addon">
-                  <i className="pi pi-dollar"></i>
-                </span>
-                <InputNumber
-                  inputId="in_price"
-                  name="price"
-                  placeholder={labels.price}
-                  value={formik.values.price}
-                  onValueChange={(e) => {
-                    formik.setFieldValue("price", e.value);
-                  }}
-                  showButtons
-                  min={0}
-                  className={classNames("w-full", {
-                    "p-invalid": formik.errors.price && formik.touched.price,
-                  })}
-                />
-              </div>
-            </Panel>
-            <Panel header="Tipo de fuente" className="my-panel">
-              <Dropdown
-                id="typeSourceId"
-                name="typeSourceId"
-                value={formik.values.typeSourceId}
-                onChange={formik.handleChange}
-                options={catalogTypeOpenSource}
-                placeholder="Tipo de fuente abierta"
-                optionLabel="name"
-                className="w-full"
-              />
-            </Panel>
-            <Panel header="Acceso por defecto" className="my-panel">
-              <Dropdown
-                id="workflowId"
-                name="workflowId"
-                value={formik.values.workflowId}
-                onChange={formik.handleChange}
-                options={catalogWorkflow}
-                placeholder="Workflow"
-                optionLabel="name"
-                className="w-full"
-              />
-            </Panel>
-            <Panel header={labels.countryCodeHeader} className="my-panel">
-              <Dropdown
-                id="countryCode"
-                name="countryCode"
-                value={formik.values.countryCode}
-                onChange={(e) => formik.setFieldValue("countryCode", e.value)}
-                options={countries}
-                optionLabel="name"
-                // placeholder={name: "Seleccione un Pais"}
-                className="w-full"
-                style={{ width: "100%" }}
-                itemTemplate={countryTemplate}
-                valueTemplate={selectedCountryTemplate}
-              />
-            </Panel>
-            <Panel className="my-panel w-full">
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span>{labels.goItem}</span>
-                <InputSwitch
-                  id="goItem"
-                  name="goItem"
-                  checked={formik.values.goItem}
-                  onChange={formik.handleChange}
-                />
-              </div>
-            </Panel>
-
-            <div className="card flex justify-content-center mt-3">
-              <span className="p-buttonset">
-                <Button
-                  type="submit"
-                  label={labels.submit}
-                  loading={isLoading}
-                  icon="pi pi-plus"
-                />
-                <Button
-                  type="reset"
-                  label="Reset"
-                  icon="pi pi-trash"
-                  onClick={formik.handleReset}
-                  outlined
-                />
-              </span>
-            </div>
-          </div>
-
-          <Toast ref={toast} position="center" />
-        </div>
-      </form>
+      <OpenSourceForm
+        labels={labels}
+        formik={formik}
+        mutation={createMutation}
+        toast={toast}
+        catalogTypeOpenSource={catalogTypeOpenSource}
+        catalogWorkflow={catalogWorkflow}
+        catalogCountry={catalogCountry}
+      />
     </>
   );
 };
