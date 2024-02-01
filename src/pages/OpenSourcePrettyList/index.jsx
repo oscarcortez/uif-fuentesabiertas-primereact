@@ -1,24 +1,30 @@
-import { BreadCrumb } from "primereact/breadcrumb";
-import { Card } from "primereact/card";
-import { TabView, TabPanel } from "primereact/tabview";
-import { Tag } from "primereact/tag";
-import { Divider } from "primereact/divider";
-import { Button } from "primereact/button";
-
 import { useState, useEffect } from "react";
 
+import { BreadCrumb } from "primereact/breadcrumb";
+import { Card } from "primereact/card";
+// import { TabView, TabPanel } from "primereact/tabview";
+import { Tag } from "primereact/tag";
+import { Divider } from "primereact/divider";
+// import { Button } from "primereact/button";
+import { SplitButton } from "primereact/splitbutton";
+import { DataView } from "primereact/dataview";
+// import { Ripple } from "primereact/ripple";
+import ReactCountryFlag from "react-country-flag";
+
 import openSourceService from "../../service/openSourceService";
+import openSourceForPrettyListService from "../../service/openSourceForPrettyListService";
 
 import "./index.css";
 
 export const OpenSourcePrettyList = () => {
-  const items = [
+  const breadcrumbItems = [
     { label: "Fuentes Abiertas" },
     { label: "Listado (clientes)" },
   ];
   const home = { icon: "pi pi-home", url: "/" };
 
   const [openSourceList, setOpenSourceList] = useState([]);
+  const [openSourceForPrettyList, setOpenSourceForPrettyList] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -26,95 +32,137 @@ export const OpenSourcePrettyList = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    (async () => {
+      setOpenSourceForPrettyList(
+        await openSourceForPrettyListService.findAll()
+      );
+    })();
+  }, []);
+
+  const buttonItems = [
+    {
+      label: "Solicitar suscripcion",
+      icon: "pi pi-refresh",
+      command: () => {
+        console.log("solicitar suscripcion");
+      },
+    },
+    {
+      label: "Link caido",
+      icon: "pi pi-times",
+      command: () => {
+        console.log("link caido");
+      },
+    },
+    {
+      label: "Comunicarme con un encargado",
+      icon: "pi pi-user",
+      command: () => {
+        window.location.href = "https://reactjs.org/";
+      },
+    },
+  ];
+
+  const onJoin = (item) => {
+    console.log(item.url);
+    window.open(item.url, "_blank");
+    //window.open("http://" + item.url, "_blank");
+    //window.location.href = "https://reactjs.org/";
+  };
+
+  // const footer = (
+  //   <>
+  //     <SplitButton
+  //       label="Entrar"
+  //       icon="pi pi-link"
+  //       // className="p-disabled"
+  //       onClick={onJoin}
+  //       model={buttonItems}
+  //       rounded
+  //     />
+  //   </>
+  // );
+  console.log("openSourceForPrettyList", openSourceForPrettyList);
   return (
     <>
-      <BreadCrumb model={items} home={home} className="text-sm" />
-      {(openSourceList.data ? openSourceList.data.dataList : []).map(
-        (openSource) => (
+      <BreadCrumb model={breadcrumbItems} home={home} className="text-sm" />
+
+      <DataView
+        value={openSourceForPrettyList ? openSourceForPrettyList.data : []}
+        layout="grid"
+        itemTemplate={(item) => (
           <Card
-            key={openSource.id}
-            className="mt-4 bg-gray-100 mr-4 ml-4"
-            title={openSource.url}
+            key={item.id}
+            title={item.shortUrl}
             subTitle={
               <>
-                {openSource.isSuscribed ? (
-                  <Tag
-                    icon="pi pi-check"
-                    value="Suscrito"
-                    className="bg-green-300"
-                  ></Tag>
-                ) : (
-                  <Tag
-                    icon="pi pi-check"
-                    value="NO Suscrito"
-                    className="bg-red-300"
-                  ></Tag>
-                )}
+                <Tag
+                  icon={item.typeListTagIcon}
+                  value={item.typeList}
+                  className={item.typeListTagBackground}
+                ></Tag>
               </>
             }
+            footer={
+              <SplitButton
+                label="Entrar"
+                icon="pi pi-link"
+                className={item.buttonClassname}
+                onClick={() => onJoin(item)}
+                model={buttonItems}
+                rounded
+              />
+            }
+            className="md:w-25rem mr-2 mt-2"
           >
-            <TabView className="">
-              <TabPanel header="Descripcion">
-                <p className="m-0">{openSource.description}</p>
-              </TabPanel>
-              <TabPanel header="Detalles" className="">
-                <div className="m-0 ">
-                  <span
-                    className="ml-3 mr-3"
-                    style={{ display: "flex", justifyContent: "center" }}
-                  >
-                    <span className="mr-8">
-                      <span className="font-bold">Busquedas:</span>{" "}
-                      {openSource.inputSearch}
-                      <Divider />
-                      <span className="font-bold">Precio:</span>{" "}
-                      {openSource.price}
-                    </span>
-                    <span>
-                      <span className="font-bold">Suscrito:</span>{" "}
-                      {openSource.isSuscribed ? "Si" : "No"}
-                      <Divider />
-                      <span className="font-bold">Ultimo Acceso:</span>{" "}
-                      {openSource.txFecha.substring(0, 10)}
-                    </span>
-                  </span>
-                </div>
-              </TabPanel>
-              <TabPanel header="Acciones">
-                <div className="m-0">
-                  <span
-                    className="ml-3 mr-3"
-                    style={{ display: "flex", justifyContent: "center" }}
-                  >
-                    <div className="mr-8">
-                      <Button
-                        size="small"
-                        label="Solicitar suscripcion"
-                        outlined
-                      />
-                      <Divider />
-                      <Button
-                        size="small"
-                        label="Notificar Link caido"
-                        outlined
-                      />
-                    </div>
-                    <div>
-                      <Button
-                        size="small"
-                        label="Comunicarme con un encargado"
-                        outlined
-                      />
-                      <Divider />
-                      <Button size="small" label="Ingresar al link" />
-                    </div>
-                  </span>
-                </div>
-              </TabPanel>
-            </TabView>
+            <div className="m-0">
+              <p>
+                <span className="font-bold mr-2">URL:</span>
+                {item.spacedUrl}
+              </p>
+              <p>
+                <span className="font-bold mr-2">Pais:</span>
+                <ReactCountryFlag
+                  countryCode={item.countryCode}
+                  svg
+                  style={{
+                    width: "2em",
+                    height: "1.5em",
+                  }}
+                  className="mr-2"
+                />
+                <span>{item.countryCode}</span>
+              </p>
+              <p>
+                <span className="font-bold mr-2">Busquedas:</span>
+                {item.entryValue}
+              </p>
+              <p>
+                <span className="font-bold mr-2">Salida:</span>
+                {item.exitValue}
+              </p>
+              <p>
+                <span className="font-bold mr-2">Precio:</span>
+                {item.price}
+              </p>
+              <p>
+                <span className="font-bold mr-2">Ultimo acceso:</span>
+                {item.lastJoin}
+              </p>
+              <p>
+                <span className="font-bold mr-2">Accesos:</span>
+                {item.joins}
+              </p>
+              <Divider />
+            </div>
+            <p
+              className="m-0"
+              dangerouslySetInnerHTML={{ __html: item.description }}
+            />
           </Card>
-        )
-      )}
+        )}
+      />
     </>
   );
 };
