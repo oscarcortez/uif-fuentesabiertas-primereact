@@ -7,7 +7,6 @@ export const initialValues = {
   price: "0",
   url: "",
   typeSourceId: "",
-  // countryCode: { name: "Peru", code: "PE" },
   countryCode: "",
   defaultWorkflowId: "",
   goItem: false,

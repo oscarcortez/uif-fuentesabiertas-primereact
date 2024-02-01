@@ -131,7 +131,6 @@ export const OpenSourceEdit = () => {
         { id, payload },
         {
           onSuccess: (data) => {
-            console.log("update success");
             if (values.goItem) {
               setTimeout(() => {
                 navigate("/open-source/" + data.data.id);

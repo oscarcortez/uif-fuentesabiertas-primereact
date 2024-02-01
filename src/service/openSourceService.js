@@ -26,8 +26,6 @@ class openSourceService {
   }
 
   async update({ id, payload }) {
-    console.log("payload", payload);
-    console.log("id", id);
     const response = await axios.put(
       `${API_ENDPOINTS.opensources}/${id}`,
       payload,
@@ -45,9 +43,9 @@ class openSourceService {
     return response.data;
   }
 
-  async delete(id) {
+  async updateStatus(id, status) {
     const response = await axios.patch(
-      `${API_ENDPOINTS.opensources_update_status}/${id}?status=I`,
+      `${API_ENDPOINTS.opensources_update_status}/${id}?status=${status}`,
       {},
       { headers: this.getHeaders }
     );

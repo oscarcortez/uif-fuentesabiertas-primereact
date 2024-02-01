@@ -28,40 +28,37 @@ export const OpenSourceForm = ({
   const items = [{ label: "Fuentes Abiertas" }, { label: "Nuevo" }];
   const home = { icon: "pi pi-home", url: "/" };
 
-  const countryTemplate = ({ code, name }) => {
-    return (
-      <div className="p-clearfix">
-        {code !== "" && (
-          <ReactCountryFlag countryCode={code} svg className="mr-2" />
-        )}
+  // const countryTemplate = ({ code, name }) => {
+  //   return (
+  //     <div className="p-clearfix">
+  //       {code !== "" && (
+  //         <ReactCountryFlag countryCode={code} svg className="mr-2" />
+  //       )}
 
-        <span
-          style={{
-            float: "center",
-            margin: ".5em .25em 0 0",
-          }}
-        >
-          {name}
-        </span>
-      </div>
-    );
-  };
+  //       <span
+  //         style={{
+  //           float: "center",
+  //           margin: ".5em .25em 0 0",
+  //         }}
+  //       >
+  //         {name}
+  //       </span>
+  //     </div>
+  //   );
+  // };
 
-  const selectedCountryTemplate = (option) => {
-    if (!option) return;
+  // TODO fix it
+  // const selectedCountryTemplate = (option) => {
+  //   if (!option) return;
 
-    return (
-      <div className="p-clearfix">
-        <ReactCountryFlag countryCode={option.code} svg className="mr-2" />
-        <span>{option.name}</span>
-      </div>
-    );
-  };
-  // useEffect(() => {
-  //   console.log("useEffect");
-  //   console.log(formik.values);
-  // }, [formik.values]);
-  //console.log(formik.values.countryCode);
+  //   return (
+  //     <div className="p-clearfix">
+  //       <ReactCountryFlag countryCode={option.code} svg className="mr-2" />
+  //       <span>{option.name}</span>
+  //     </div>
+  //   );
+  // };
+
   return (
     <>
       <BreadCrumb model={items} home={home} className="text-sm" />
@@ -183,21 +180,6 @@ export const OpenSourceForm = ({
               />
             </Panel>
             <Panel header={labels.countryCodeHeader} className="my-panel">
-              {/* <Dropdown
-                id="countryCode"
-                name="countryCode"
-                value={formik.values.countryCode}
-                onChange={(e) => formik.setFieldValue("countryCode", e.value)}
-                options={catalogCountry}
-                optionLabel="name"
-                // placeholder={name: "Seleccione un Pais"}
-                className="w-full"
-                style={{ width: "100%" }}
-                itemTemplate={countryTemplate}
-                valueTemplate={selectedCountryTemplate}
-              /> */}
-              {/* {console.log(formik.values)} */}
-
               <Dropdown
                 inputId="countryCode"
                 name="countryCode"
@@ -211,22 +193,6 @@ export const OpenSourceForm = ({
                 }}
                 className="w-full"
               />
-              {/* <div className="p-inputgroup flex-1 mb-3">
-                <span className="p-inputgroup-addon">
-                  <i className="pi pi-search"></i>
-                </span>
-                <InputText
-                  type="text"
-                  id="countryCode"
-                  name="countryCode"
-                  placeholder={labels.countryCode}
-                  {...formik.getFieldProps("countryCode")}
-                  className={classNames("w-full", {
-                    "p-invalid":
-                      formik.errors.countryCode && formik.touched.countryCode,
-                  })}
-                />
-              </div> */}
             </Panel>
             <Panel className="my-panel w-full">
               <div style={{ display: "flex", justifyContent: "space-between" }}>
