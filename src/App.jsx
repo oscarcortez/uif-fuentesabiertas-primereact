@@ -15,6 +15,7 @@ import { OpenSourceAdmin } from "./pages/OpenSourceAdmin";
 import { OpenSourcePrettyList } from "./pages/OpenSourcePrettyList";
 import { OpenSourceItem } from "./pages/OpenSourceItem";
 import { OpenSourceEdit } from "./pages/OpenSourceEdit";
+import { OpenSourceUserWorkflowAdmin } from "./pages/OpenSourceUserWorkflowAdmin";
 
 const router = createBrowserRouter([
   { path: "/dashboard", element: <PrivateRoute component={Dashboard} /> },
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "/open-source-pretty-list",
     element: <PrivateRoute component={OpenSourcePrettyList} />,
+  },
+  {
+    path: "/open-source-user-workflow-admin",
+    element: <PrivateRoute component={OpenSourceUserWorkflowAdmin} />,
   },
   { path: "/", element: <Navigate to="/login" replace /> },
 ]);

@@ -23,6 +23,11 @@ export const leftbarItems = [
         icon: "pi pi-fw pi-th-large",
         navigate: "/open-source-pretty-list",
       },
+      {
+        label: "Asignaciones (admin)",
+        icon: "pi pi-fw pi-th-large",
+        navigate: "/open-source-user-workflow-admin",
+      },
     ],
   },
   // {
