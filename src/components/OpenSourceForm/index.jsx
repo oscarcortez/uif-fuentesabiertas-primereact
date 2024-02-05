@@ -11,10 +11,10 @@ import { Panel } from "primereact/panel";
 import { Toast } from "primereact/toast";
 import { Divider } from "primereact/divider";
 // import { useNavigate } from "react-router-dom";
-import { BreadCrumb } from "primereact/breadcrumb";
+// import { BreadCrumb } from "primereact/breadcrumb";
 import classNames from "classnames";
-import ReactCountryFlag from "react-country-flag";
-import { useEffect } from "react";
+// import ReactCountryFlag from "react-country-flag";
+// import { useEffect } from "react";
 
 export const OpenSourceForm = ({
   labels,
@@ -25,9 +25,6 @@ export const OpenSourceForm = ({
   catalogWorkflow,
   catalogCountry,
 }) => {
-  const items = [{ label: "Fuentes Abiertas" }, { label: "Nuevo" }];
-  const home = { icon: "pi pi-home", url: "/" };
-
   // const countryTemplate = ({ code, name }) => {
   //   return (
   //     <div className="p-clearfix">
@@ -61,7 +58,6 @@ export const OpenSourceForm = ({
 
   return (
     <>
-      <BreadCrumb model={items} home={home} className="text-sm" />
       <h3 className="ml-3 text-gray-600">Nueva Fuente Abierta</h3>
       <Divider />
       <form
