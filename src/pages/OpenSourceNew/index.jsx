@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
+import { BreadCrumb } from "primereact/breadcrumb";
 
 import catalogService from "../../service/catalogService";
 import openSourceService from "../../service/openSourceService";
@@ -20,6 +21,9 @@ import { OpenSourceForm } from "../../components/OpenSourceForm";
 import { showSuccess, showError } from "../../components/CustomToast";
 
 export const OpenSourceNew = () => {
+  const items = [{ label: "Fuentes Abiertas" }, { label: "Nuevo" }];
+  const home = { icon: "pi pi-home", url: "/" };
+
   const createMutation = useMutation({
     mutationFn: (payload) => {
       return openSourceService.create(payload);
@@ -84,6 +88,7 @@ export const OpenSourceNew = () => {
 
   return (
     <>
+      <BreadCrumb model={items} home={home} className="text-sm" />
       <OpenSourceForm
         labels={labels}
         formik={formik}

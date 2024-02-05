@@ -12,15 +12,18 @@ export const initialValues = {
 };
 
 export const labels = {
-  description: "Description",
-  inputSearch: "InputSearch",
-  isSuscribed: "IsSuscribed",
+  description: "Descripcion",
+  inputSearch: "Valor de busqueda",
+  outputSearch: "Resultado de busqueda",
   price: "Precio",
   url: "Url",
   typeSourceId: "Tipo de fuente",
-  personId: "PersonId",
-  submit: "Crear",
-  success: "Se registro correctamente",
+  countryCodeHeader: "Pais",
+  countryCodePlaceHolder: "Selecciona un pais",
+  defaultWorkflowId: "Workflow",
+  submit: "Actualizar",
+  success: "Se actualizo correctamente",
+  error: "Error: ",
   goItem: "Visualizar item",
 };
 

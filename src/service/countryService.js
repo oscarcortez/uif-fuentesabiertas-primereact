@@ -2,6 +2,7 @@ class countryService {
   findAllForDdl() {
     const result = [
       // { name: "Seleccione un Pais", code: "" },
+      { name: "BOLIVIA", code: "BO" },
       { name: "CHILE", code: "CL" },
       { name: "PERU", code: "PE" },
       { name: "SURINAME", code: "SR" },

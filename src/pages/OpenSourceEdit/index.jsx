@@ -4,22 +4,27 @@ import { useFormik } from "formik";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 
+import { BreadCrumb } from "primereact/breadcrumb";
+
 import catalogService from "../../service/catalogService";
 import openSourceService from "../../service/openSourceService";
 import countryService from "../../service/countryService";
 
 import {
-  initialValues,
+  // initialValues,
   // validationSchema,
   labels,
   errorCodes,
-} from "../../config/openSourceNewConfig";
+} from "../../config/openSourceEditConfig";
 
 import "./index.css";
 import { OpenSourceForm } from "../../components/OpenSourceForm";
 import { showSuccess, showError } from "../../components/CustomToast";
 
 export const OpenSourceEdit = () => {
+  const items = [{ label: "Fuentes Abiertas" }, { label: "Editar" }];
+  const home = { icon: "pi pi-home", url: "/" };
+
   const { id } = useParams();
   const [openSourceItem, setOpenSourceItem] = useState({});
 
@@ -113,7 +118,8 @@ export const OpenSourceEdit = () => {
       typeSourceId: selectedTypeOpenSource,
     },
     // validationSchema: validationSchema,
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values) => {
+      //, { resetForm }
       const payload = {
         description: values.description,
         inputSearch: values.inputSearch,
@@ -149,6 +155,7 @@ export const OpenSourceEdit = () => {
 
   return (
     <>
+      <BreadCrumb model={items} home={home} className="text-sm" />
       <OpenSourceForm
         labels={labels}
         formik={formik}
