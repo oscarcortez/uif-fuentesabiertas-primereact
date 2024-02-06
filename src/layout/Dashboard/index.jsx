@@ -14,6 +14,7 @@ export const Dashboard = ({
   leftbarItems,
   rightbarItems,
   username,
+  userRole,
 }) => {
   const [visibleRightBar, setVisibleRightBar] = useState(false);
   const [visibleLeftBar, setVisibleLeftBar] = useState(false);
@@ -26,6 +27,8 @@ export const Dashboard = ({
         rightPopupIcon={topbarItems.rightPopupIcon}
         onClickForLeftBar={() => setVisibleLeftBar(true)}
         onClickForRightbar={() => setVisibleRightBar(true)}
+        username={username}
+        userRole={userRole}
       />
       <PopupLeftbar
         visible={visibleLeftBar}

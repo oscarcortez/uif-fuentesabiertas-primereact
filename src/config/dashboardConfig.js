@@ -4,7 +4,7 @@ export const topbarItems = {
   rightPopupIcon: "cog",
 };
 
-export const leftbarItems = [
+const leftbarItemsAdministrador = [
   {
     label: "FUENTES ABIERTAS",
     items: [
@@ -30,33 +30,25 @@ export const leftbarItems = [
       },
     ],
   },
-  // {
-  //   label: "INTERCAMBIO DE EXPERIENCIAS",
-  //   items: [
-  //     {
-  //       label: "Nuevo",
-  //       icon: "pi pi-fw pi-plus",
-  //       command: () => {
-  //         console.log("Nuevo");
-  //       },
-  //     },
-  //     {
-  //       label: "Listado",
-  //       icon: "pi pi-fw pi-list",
-  //       command: () => {
-  //         console.log("Listado");
-  //       },
-  //     },
-  //     {
-  //       label: "Listado cards",
-  //       icon: "pi pi-fw pi-th-large",
-  //       command: () => {
-  //         console.log("Listado cards");
-  //       },
-  //     },
-  //   ],
-  // },
 ];
+
+const leftbarItemsCliente = [
+  {
+    label: "FUENTES ABIERTAS",
+    items: [
+      {
+        label: "Listado (clientes)",
+        icon: "pi pi-fw pi-th-large",
+        navigate: "/open-source-pretty-list",
+      },
+    ],
+  },
+];
+
+export const leftbarItems = {
+  Administrador: leftbarItemsAdministrador,
+  Cliente: leftbarItemsCliente,
+};
 
 export const rightbarItems = {
   menuItems: [

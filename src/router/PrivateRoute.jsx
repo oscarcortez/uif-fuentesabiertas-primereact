@@ -2,7 +2,11 @@ import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
 
 import { Dashboard } from "../layout/Dashboard";
-import { isLoggedIn, getUsername } from "../service/authenticateService";
+import {
+  isLoggedIn,
+  getUsername,
+  getRole,
+} from "../service/authenticateService";
 
 import {
   topbarItems,
@@ -11,14 +15,15 @@ import {
 } from "../config/dashboardConfig";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  //const authService = new authenticateService();
-
+  const role = getRole();
+  console.log("role", role);
   return isLoggedIn() ? (
     <>
       <Dashboard
+        userRole={getRole()}
         username={getUsername()}
         topbarItems={topbarItems}
-        leftbarItems={leftbarItems}
+        leftbarItems={leftbarItems[role]}
         rightbarItems={rightbarItems}
       >
         <Component {...rest} />

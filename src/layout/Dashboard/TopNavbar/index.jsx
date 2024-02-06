@@ -8,6 +8,8 @@ export const TopNavbar = ({
   rightPopupIcon,
   onClickForLeftBar,
   onClickForRightbar,
+  username,
+  userRole,
 }) => {
   const start = (
     <div className="flex">
@@ -23,11 +25,17 @@ export const TopNavbar = ({
     <Menubar
       start={start}
       end={
-        <Button
-          icon={`pi pi-${rightPopupIcon}`}
-          onClick={onClickForRightbar}
-          className="bg-blue-700 text-xs border-1 border-blue-700 hover:bg-blue-800"
-        />
+        <div className="flex align-items-center gap-2">
+          <span className="text-blue-100">{username}</span>
+          <span className="text-blue-100">|</span>
+          <span className="text-blue-100">{userRole}</span>
+          <span className="text-blue-100">|</span>
+          <Button
+            icon={`pi pi-${rightPopupIcon}`}
+            onClick={onClickForRightbar}
+            className="bg-blue-700 text-xs border-1 border-blue-700 hover:bg-blue-800"
+          />
+        </div>
       }
       className="bg-blue-700  top-navbar"
       // style={{ zIndex: 1000 }}

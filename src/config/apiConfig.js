@@ -18,9 +18,11 @@ export const API_ENDPOINTS = {
   opensources_user_workflow_update_status: `${BASE_URL}${API_VERSION}/opensources-user-workflow/update-status`,
   opensources_user_workflow_find_all_by_status: `${BASE_URL}${API_VERSION}/opensources-user-workflow/findAllByStatus`,
   opensources_user_workflow_page_by_status: `${BASE_URL}${API_VERSION}/opensources-user-workflow/pageByStatus`,
+  opensources_user_workflow_by_session: `${BASE_URL}${API_VERSION}/opensources-user-workflow/bySession`,
 
   opensources_for_pretty_list: `${BASE_URL}${API_VERSION}/opensources-for-pretty-list`,
   opensources_for_pretty_list_typelist: `${BASE_URL}${API_VERSION}/opensources-for-pretty-list/typeList`,
+  opensources_for_pretty_list_session_and_free: `${BASE_URL}${API_VERSION}/opensources-for-pretty-list/session-and-free`,
 
   opensources_user_external_link: `${BASE_URL}${API_VERSION}/opensources-user-external-link`,
 };

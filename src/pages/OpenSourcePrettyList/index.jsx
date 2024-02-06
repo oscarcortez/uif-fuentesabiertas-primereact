@@ -9,10 +9,19 @@ import { DataView } from "primereact/dataview";
 
 import openSourceForPrettyListService from "../../service/openSourceForPrettyListService";
 import openSourceUserExternalLinkService from "../../service/openSourceUserExternalLinkService";
+import openSourceUserWorkflowService from "../../service/openSourceUserWorkflowService";
+import { getUsername } from "../../service/authenticateService";
 
 import "./index.css";
+import { ErrorMessage } from "formik";
 
 export const OpenSourcePrettyList = () => {
+  const createBySessionMutation = useMutation({
+    mutationFn: (payload) => {
+      return openSourceUserWorkflowService.createBySession(payload);
+    },
+  });
+
   const breadcrumbItems = [
     { label: "Fuentes Abiertas" },
     { label: "Listado (clientes)" },
@@ -30,7 +39,7 @@ export const OpenSourcePrettyList = () => {
   useEffect(() => {
     (async () => {
       setOpenSourceForPrettyList(
-        await openSourceForPrettyListService.findAll()
+        await openSourceForPrettyListService.findAllBySessionAndFree()
       );
     })();
   }, []);
@@ -40,7 +49,24 @@ export const OpenSourcePrettyList = () => {
       label: "Solicitar suscripcion",
       icon: "pi pi-refresh",
       command: () => {
-        console.log("solicitar suscripcion", item);
+        const payload = {
+          openSourceId: item.openSourceId,
+          userId: 0,
+          workflowId: 0,
+        };
+        createBySessionMutation.mutate(payload, {
+          onSuccess: (data) => {
+            //showSuccess(toast, labels.success, payload.openSourceId);
+            console.log("send", payload.openSourceId);
+          },
+          onError: (error) => {
+            //const errorMessage = errorCodes[error.code];
+            //showError(toast, labels.error, errorMessage ?? error.code);
+            console.log("error", ErrorMessage ?? error.code);
+          },
+        });
+
+        console.log("solicitar suscripcion", item.openSourceId, getUsername());
       },
     },
     {
