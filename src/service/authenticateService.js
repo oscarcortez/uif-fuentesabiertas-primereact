@@ -42,6 +42,16 @@ const getHeaders = () => {
   };
 };
 
+const getRole = () => {
+  const roles = {
+    "oscar.cortez": "Administrador",
+    "nestor.mollinedo": "Supervisor",
+    "jaime.chura": "Cliente",
+  };
+  const username = JSON.parse(localStorage.getItem("user")).username;
+
+  return roles[username];
+};
 export {
   login,
   logout,
@@ -50,4 +60,5 @@ export {
   getToken,
   getHeaders,
   getUsername,
+  getRole,
 };
