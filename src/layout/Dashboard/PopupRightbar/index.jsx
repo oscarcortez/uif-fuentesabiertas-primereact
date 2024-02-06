@@ -19,6 +19,7 @@ export const PopupRightbar = ({
   title,
   languageItems,
   username,
+  userRole,
 }) => {
   const navigate = useNavigate();
 
@@ -40,7 +41,8 @@ export const PopupRightbar = ({
       <div className="center-content">
         <h2>{title}</h2>
         <Avatar label={usernameAvatar(username)} size="xlarge" />
-        <h4>{usernameFormated(username)}</h4>
+        <span>{usernameFormated(username)}</span>
+        <span className="text-sm">{userRole}</span>
         <Menu model={itemsNavigate} className="text-sm mt-3" />
       </div>
       <div className="card flex justify-content-center mt-3">
@@ -59,4 +61,5 @@ PopupRightbar.propTypes = {
   title: PropTypes.string.isRequired,
   languageItems: PropTypes.arrayOf(PropTypes.object).isRequired,
   username: PropTypes.string.isRequired,
+  userRole: PropTypes.string.isRequired,
 };

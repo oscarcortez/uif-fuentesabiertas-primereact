@@ -19,12 +19,21 @@ export const Dashboard = ({
   const [visibleRightBar, setVisibleRightBar] = useState(false);
   const [visibleLeftBar, setVisibleLeftBar] = useState(false);
 
+  const iconRole = {
+    Administrador: "pi-lock-open",
+    Supervisor: "pi-users",
+    Cliente: "pi-user",
+  };
+
+  console.log("userrole", userRole);
+  console.log("iconRole", iconRole[userRole]);
+
   return (
     <>
       <TopNavbar
         leftPopupIcon={topbarItems.leftPopupIcon}
         title={topbarItems.title}
-        rightPopupIcon={topbarItems.rightPopupIcon}
+        rightPopupIcon={iconRole[userRole]}
         onClickForLeftBar={() => setVisibleLeftBar(true)}
         onClickForRightbar={() => setVisibleRightBar(true)}
         username={username}
@@ -37,6 +46,7 @@ export const Dashboard = ({
       />
       <PopupRightbar
         username={username}
+        userRole={userRole}
         visible={visibleRightBar}
         onHide={() => setVisibleRightBar(false)}
         menuItems={rightbarItems.menuItems}
