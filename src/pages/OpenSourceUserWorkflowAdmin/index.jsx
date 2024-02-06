@@ -21,15 +21,8 @@ export const OpenSourceUserWorkflowAdmin = () => {
       return openSourceUserWorkflowService.update(id, payload);
     },
   });
-  // const navigate = useNavigate();
-
-  // const [catalogCountry, setCatalogCountry] = useState([]);
 
   const [catalogWorkflow, setCatalogWorkflow] = useState([]);
-
-  // useEffect(() => {
-  //   setCatalogCountry(countryService.findAllForDdl());
-  // }, []);
 
   useEffect(() => {
     (async () => {
@@ -44,92 +37,8 @@ export const OpenSourceUserWorkflowAdmin = () => {
     openSourceUserWorkflowListActive,
     setOpenSourceUserWorkflowListActive,
   ] = useState([]);
-  // const [
-  //   openSourceUserWorkflowListInactive,
-  //   setOpenSourceUserWorkflowListInactive,
-  // ] = useState([]);
 
   const dt = useRef(null);
-
-  // const deleteAction = async (rowData) => {
-  //   const response = await openSourceUserWorkflowService.updateStatus(
-  //     rowData.id,
-  //     "I"
-  //   );
-  //   console.log("response", response);
-  //   (async () => {
-  //     setOpenSourceUserWorkflowListActive(
-  //       await openSourceUserWorkflowService.findAll()
-  //     );
-  //   })();
-  //   (async () => {
-  //     setOpenSourceUserWorkflowListInactive(
-  //       await openSourceUserWorkflowService.findAll()
-  //     );
-  //   })();
-  // };
-
-  // const undoAction = async (rowData) => {
-  //   await openSourceUserWorkflowService.updateStatus(rowData.id, "A");
-  //   (async () => {
-  //     setOpenSourceUserWorkflowListActive(
-  //       await openSourceUserWorkflowService.findAll()
-  //     );
-  //   })();
-  //   (async () => {
-  //     setOpenSourceUserWorkflowListInactive(
-  //       await openSourceUserWorkflowService.findAll()
-  //     );
-  //   })();
-  // };
-
-  // const editAction = (rowData) => {
-  //   navigate("/open-source-user-workflow-edit/" + rowData.id);
-  // };
-
-  // const viewAction = (rowData) => {
-  //   navigate("/open-source-user-workflow/" + rowData.id);
-  // };
-
-  // const activeActionBodyTemplate = (rowData) => {
-  //   return (
-  //     <>
-  //       <Button
-  //         icon="pi pi-pencil"
-  //         className="p-button-rounded"
-  //         text
-  //         onClick={() => editAction(rowData)}
-  //       />
-  //       <Button
-  //         icon="pi pi-trash"
-  //         className="p-button-rounded"
-  //         severity="danger"
-  //         text
-  //         onClick={() => deleteAction(rowData)}
-  //       />
-  //     </>
-  //   );
-  // };
-
-  // const inactiveActionBodyTemplate = (rowData) => {
-  //   return (
-  //     <>
-  //       <Button
-  //         icon="pi pi-pencil"
-  //         className="p-button-rounded"
-  //         text
-  //         onClick={() => editAction(rowData)}
-  //       />
-  //       <Button
-  //         icon="pi pi-undo"
-  //         className="p-button-rounded"
-  //         severity="warning"
-  //         text
-  //         onClick={() => undoAction(rowData)}
-  //       />
-  //     </>
-  //   );
-  // };
 
   useEffect(() => {
     (async () => {
@@ -138,17 +47,6 @@ export const OpenSourceUserWorkflowAdmin = () => {
       );
     })();
   }, []);
-  //   (async () => {
-  //     setOpenSourceUserWorkflowListInactive(
-  //       await openSourceUserWorkflowService.findAll()
-  //     );
-  //   })();
-  // }, []);
-
-  // console.log(
-  //   "openSourceUserWorkflowListActive",
-  //   openSourceUserWorkflowListActive
-  // );
 
   const handleCatalogueWorkflowChange = (e, rowData) => {
     console.log("e.value", e.value);
@@ -160,14 +58,6 @@ export const OpenSourceUserWorkflowAdmin = () => {
     };
     console.log("payload", payload);
     const id = rowData.id;
-    // (async () => {
-    //   await openSourceUserWorkflowService.update({ id, payload });
-    // })();
-    // (async () => {
-    //   setOpenSourceUserWorkflowListActive(
-    //     await openSourceUserWorkflowService.findAll()
-    //   );
-    // })();
     updateMutation.mutate(
       { id, payload },
       {
