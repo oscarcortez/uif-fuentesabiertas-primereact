@@ -23,10 +23,19 @@ class openSourceForPrettyListService {
     return response.data;
   }
 
-  //find by type list
   async findAllByStatus(status) {
     const response = await axios.get(
       `${API_ENDPOINTS.opensources_find_all_by_status}/${status}`,
+      {
+        headers: this.getHeaders,
+      }
+    );
+    return response.data;
+  }
+
+  async findAllBySessionAndFree() {
+    const response = await axios.get(
+      API_ENDPOINTS.opensources_for_pretty_list_session_and_free,
       {
         headers: this.getHeaders,
       }

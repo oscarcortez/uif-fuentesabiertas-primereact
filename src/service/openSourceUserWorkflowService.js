@@ -32,6 +32,17 @@ class openSourceUserWorkflowService {
     return response.data;
   }
 
+  async createBySession(payload) {
+    const response = await axios.post(
+      API_ENDPOINTS.opensources_user_workflow_by_session,
+      payload,
+      {
+        headers: this.getHeaders,
+      }
+    );
+    return response.data;
+  }
+
   async update({ id, payload }) {
     console.log("payload", payload);
     console.log("id", id);
