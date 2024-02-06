@@ -130,13 +130,13 @@ export const OpenSourceUserWorkflowAdmin = () => {
               body={(rowData) => rowData.user.username}
               sortable
             />
-            <Column
+            {/* <Column
               header="Estado"
               body={(rowData) =>
                 rowData.status === "I" ? "Inactivo" : "Activo"
               }
               sortable
-            ></Column>
+            /> */}
             <Column
               header="Workflow"
               body={(rowData) => (
