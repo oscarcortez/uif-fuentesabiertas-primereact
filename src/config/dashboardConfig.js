@@ -19,12 +19,12 @@ const leftbarItemsAdministrador = [
         navigate: "/open-source-admin",
       },
       {
-        label: "Listado (clientes)",
+        label: "Listado",
         icon: "pi pi-fw pi-th-large",
         navigate: "/open-source-pretty-list",
       },
       {
-        label: "Asignaciones (admin)",
+        label: "Asignaciones",
         icon: "pi pi-fw pi-th-large",
         navigate: "/open-source-user-workflow-admin",
       },
@@ -37,7 +37,7 @@ const leftbarItemsCliente = [
     label: "FUENTES ABIERTAS",
     items: [
       {
-        label: "Listado (clientes)",
+        label: "Listado",
         icon: "pi pi-fw pi-th-large",
         navigate: "/open-source-pretty-list",
       },
