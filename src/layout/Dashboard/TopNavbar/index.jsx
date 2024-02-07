@@ -2,6 +2,8 @@ import { Menubar } from "primereact/menubar";
 import { Button } from "primereact/button";
 import PropTypes from "prop-types";
 
+import { usernameAvatar } from "../../../utils/strings";
+
 export const TopNavbar = ({
   leftPopupIcon,
   title,
@@ -30,7 +32,14 @@ export const TopNavbar = ({
             icon={`pi ${rightPopupIcon}`}
             label={username}
             onClick={onClickForRightbar}
-            className="bg-blue-700 text-xs border-1 border-blue-700 hover:bg-blue-800"
+            className="custom-large-config bg-blue-700 text-xs border-1 border-blue-700 hover:bg-blue-800"
+          />
+
+          <Button
+            icon={`pi ${rightPopupIcon}`}
+            label={usernameAvatar(username)}
+            onClick={onClickForRightbar}
+            className="custom-short-config bg-blue-700 text-xs border-1 border-blue-700 hover:bg-blue-800"
           />
         </div>
       }
