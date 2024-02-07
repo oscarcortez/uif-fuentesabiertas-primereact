@@ -16,7 +16,7 @@ import {
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const role = getRole();
-  console.log("role", role);
+
   return isLoggedIn() ? (
     <>
       <Dashboard

@@ -152,22 +152,22 @@ export const OpenSourceAdmin = () => {
               currentPageReportTemplate="Mostrando desde {first} hasta {last} de {totalRecords} fuentes abiertas"
               rows={10}
             >
-              <Column field="id" header="ID" sortable></Column>
+              {/* <Column field="id" header="ID" sortable></Column>
               <Column
                 field="inputSearch"
                 header="Busquedas"
                 sortable
                 filter
                 filterPlaceholder="Por busqueda"
-              ></Column>
-              <Column
+              ></Column> */}
+              {/* <Column
                 field="isSuscribed"
                 header="Esta suscrito"
                 sortable
                 body={(rowData) => (rowData.isSuscribed ? "Si" : "No")}
                 filter
                 filterPlaceholder="Suscrito"
-              ></Column>
+              ></Column> */}
               <Column
                 field="price"
                 header="Precio $"

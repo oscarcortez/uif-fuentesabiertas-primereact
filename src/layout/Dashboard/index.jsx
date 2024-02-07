@@ -25,9 +25,6 @@ export const Dashboard = ({
     Cliente: "pi-user",
   };
 
-  console.log("userrole", userRole);
-  console.log("iconRole", iconRole[userRole]);
-
   return (
     <>
       <TopNavbar
