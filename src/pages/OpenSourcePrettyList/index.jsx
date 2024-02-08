@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
-
+import { ErrorMessage } from "formik";
 import { useMutation } from "@tanstack/react-query";
-
-import { OpenSourceCard } from "../../components/OpenSourceCard";
 
 import { BreadCrumb } from "primereact/breadcrumb";
 import { DataView } from "primereact/dataview";
+
+import { OpenSourceCard } from "../../components/OpenSourceCard";
 
 import openSourceForPrettyListService from "../../service/openSourceForPrettyListService";
 import openSourceUserExternalLinkService from "../../service/openSourceUserExternalLinkService";
 import openSourceUserWorkflowService from "../../service/openSourceUserWorkflowService";
 import { getUsername } from "../../service/authenticateService";
 
+import { TitlePage } from "../../components/TitlePage";
+
 import "./index.css";
-import { ErrorMessage } from "formik";
 
 export const OpenSourcePrettyList = () => {
   const createBySessionMutation = useMutation({
@@ -27,6 +28,7 @@ export const OpenSourcePrettyList = () => {
     { label: "Listado (clientes)" },
   ];
   const home = { icon: "pi pi-home", url: "/" };
+  const title = "Publicaciones - Fuentes Abiertas ";
 
   const [openSourceForPrettyList, setOpenSourceForPrettyList] = useState([]);
 
@@ -104,10 +106,10 @@ export const OpenSourcePrettyList = () => {
     });
   };
 
-  // console.log("openSourceForPrettyList", openSourceForPrettyList);
   return (
     <>
       <BreadCrumb model={breadcrumbItems} home={home} className="text-sm" />
+      <TitlePage title={title} />
       <DataView
         value={openSourceForPrettyList?.data || []}
         layout="grid"
@@ -116,6 +118,7 @@ export const OpenSourcePrettyList = () => {
             item={item}
             buttonItems={buttonItems}
             onJoin={onJoin}
+            footer
           />
         )}
       />

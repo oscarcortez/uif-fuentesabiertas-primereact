@@ -19,11 +19,12 @@ import {
 import "./index.css";
 import { OpenSourceForm } from "../../components/OpenSourceForm";
 import { showSuccess, showError } from "../../components/CustomToast";
+import { TitlePage } from "../../components/TitlePage";
 
 export const OpenSourceNew = () => {
   const items = [{ label: "Fuentes Abiertas" }, { label: "Nuevo" }];
   const home = { icon: "pi pi-home", url: "/" };
-
+  const title = "Nuevo item - Fuentes Abiertas";
   const createMutation = useMutation({
     mutationFn: (payload) => {
       return openSourceService.create(payload);
@@ -89,6 +90,7 @@ export const OpenSourceNew = () => {
   return (
     <>
       <BreadCrumb model={items} home={home} className="text-sm" />
+      <TitlePage title={title} />
       <OpenSourceForm
         labels={labels}
         formik={formik}

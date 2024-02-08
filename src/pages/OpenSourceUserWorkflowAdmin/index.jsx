@@ -1,18 +1,16 @@
 import { useRef, useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 
 import { BreadCrumb } from "primereact/breadcrumb";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-// import { Button } from "primereact/button";
-// import { TabView, TabPanel } from "primereact/tabview";
 import { Dropdown } from "primereact/dropdown";
+
+import { TitlePage } from "../../components/TitlePage";
 
 import ReactCountryFlag from "react-country-flag";
 
 import openSourceUserWorkflowService from "../../service/openSourceUserWorkflowService";
-// import countryService from "../../service/countryService";
 import catalogService from "../../service/catalogService";
 
 export const OpenSourceUserWorkflowAdmin = () => {
@@ -32,7 +30,7 @@ export const OpenSourceUserWorkflowAdmin = () => {
 
   const items = [{ label: "Fuentes Abiertas" }, { label: "Asignaciones" }];
   const home = { icon: "pi pi-home", url: "/" };
-
+  const title = "Asignaciones - Fuentes Abiertas";
   const [
     openSourceUserWorkflowListActive,
     setOpenSourceUserWorkflowListActive,
@@ -77,13 +75,14 @@ export const OpenSourceUserWorkflowAdmin = () => {
     );
   };
 
-  console.log("catalogWorkflow", catalogWorkflow);
+  // console.log("catalogWorkflow", catalogWorkflow);
   return (
     <>
       <div className="p-grid">
         <div className="p-col-12">
           <BreadCrumb model={items} home={home} />
         </div>
+        <TitlePage title={title} />
         <div className="p-col-12">
           <DataTable
             value={

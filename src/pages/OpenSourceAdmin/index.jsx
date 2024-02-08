@@ -7,6 +7,8 @@ import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { TabView, TabPanel } from "primereact/tabview";
 
+import { TitlePage } from "../../components/TitlePage";
+
 import openSourceService from "../../service/openSourceService";
 
 import "./index.css";
@@ -16,6 +18,8 @@ export const OpenSourceAdmin = () => {
 
   const items = [{ label: "Fuentes Abiertas" }, { label: "Administrar" }];
   const home = { icon: "pi pi-home", url: "/" };
+
+  const title = "Administracion - Fuentes Abiertas";
 
   const [openSourceListActive, setOpenSourceListActive] = useState([]);
   const [openSourceListInactive, setOpenSourceListInactive] = useState([]);
@@ -48,6 +52,7 @@ export const OpenSourceAdmin = () => {
   };
 
   const viewAction = (rowData) => {
+    console.log(rowData);
     navigate("/open-source/" + rowData.id);
   };
 
@@ -99,10 +104,8 @@ export const OpenSourceAdmin = () => {
   useEffect(() => {
     (async () => {
       setOpenSourceListActive(await openSourceService.findAllByStatus("A"));
-      //setOpenSourceActiveCount(openSourceListActive.len);
     })();
   }, []);
-  // console.log("openSourceActiveCount", openSourceListActive.data.length);
   useEffect(() => {
     (async () => {
       setOpenSourceListInactive(await openSourceService.findAllByStatus("I"));
@@ -129,7 +132,7 @@ export const OpenSourceAdmin = () => {
   return (
     <>
       <BreadCrumb model={items} home={home} className="text-sm" />
-
+      <TitlePage title={title} />
       <TabView>
         <TabPanel
           header={`Activos (${
@@ -168,13 +171,13 @@ export const OpenSourceAdmin = () => {
                 filter
                 filterPlaceholder="Suscrito"
               ></Column> */}
-              <Column
+              {/* <Column
                 field="price"
                 header="Precio $"
                 sortable
                 filter
                 filterPlaceholder="Precio"
-              ></Column>
+              ></Column> */}
               <Column
                 field="url"
                 header="Url"
@@ -185,6 +188,7 @@ export const OpenSourceAdmin = () => {
               <Column
                 header="Acciones"
                 body={activeActionBodyTemplate}
+                className="pb-0 pt-0"
               ></Column>
             </DataTable>
           </div>
@@ -202,14 +206,14 @@ export const OpenSourceAdmin = () => {
               paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
               dataKey="id"
               ref={dt}
-              header={header}
+              // header={header}
               paginator
               emptyMessage="No data found."
               className="datatable-responsive"
               currentPageReportTemplate="Mostrando desde {first} hasta {last} de {totalRecords} fuentes abiertas"
               rows={10}
             >
-              <Column field="id" header="ID" sortable></Column>
+              {/* <Column field="id" header="ID" sortable></Column>
               <Column
                 field="inputSearch"
                 header="Busquedas"
@@ -231,7 +235,7 @@ export const OpenSourceAdmin = () => {
                 sortable
                 filter
                 filterPlaceholder="Precio"
-              ></Column>
+              ></Column> */}
               <Column
                 field="url"
                 header="Url"
@@ -242,6 +246,7 @@ export const OpenSourceAdmin = () => {
               <Column
                 header="Acciones"
                 body={inactiveActionBodyTemplate}
+                className="pb-0 pt-0"
               ></Column>
             </DataTable>
           </div>

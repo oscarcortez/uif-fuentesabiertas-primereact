@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 
 import { BreadCrumb } from "primereact/breadcrumb";
+import { TitlePage } from "../../components/TitlePage";
 
 import catalogService from "../../service/catalogService";
 import openSourceService from "../../service/openSourceService";
@@ -22,10 +23,15 @@ import { OpenSourceForm } from "../../components/OpenSourceForm";
 import { showSuccess, showError } from "../../components/CustomToast";
 
 export const OpenSourceEdit = () => {
-  const items = [{ label: "Fuentes Abiertas" }, { label: "Editar" }];
-  const home = { icon: "pi pi-home", url: "/" };
-
   const { id } = useParams();
+  const items = [
+    { label: "Fuentes Abiertas" },
+    { label: "Editar" },
+    { label: id },
+  ];
+  const home = { icon: "pi pi-home", url: "/" };
+  const title = "Editar item - Fuentes Abiertas";
+
   const [openSourceItem, setOpenSourceItem] = useState({});
 
   const [selectedCountry, setSelectedCountry] = useState({});
@@ -156,6 +162,7 @@ export const OpenSourceEdit = () => {
   return (
     <>
       <BreadCrumb model={items} home={home} className="text-sm" />
+      <TitlePage title={title} />
       <OpenSourceForm
         labels={labels}
         formik={formik}
