@@ -11,5 +11,5 @@ export const LabelValue = ({ label, value }) => {
 
 LabelValue.propTypes = {
   label: PropTypes.string.isRequired,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any,
 };

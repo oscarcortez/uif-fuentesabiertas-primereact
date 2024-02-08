@@ -5,5 +5,5 @@ export const HtmlContent = ({ content }) => {
 };
 
 HtmlContent.propTypes = {
-  content: PropTypes.any.isRequired,
+  content: PropTypes.any,
 };

@@ -19,5 +19,5 @@ export const CountryFlagItem = ({ countryCode }) => {
 };
 
 CountryFlagItem.propTypes = {
-  countryCode: PropTypes.string.isRequired,
+  countryCode: PropTypes.string,
 };

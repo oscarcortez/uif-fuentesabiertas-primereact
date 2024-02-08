@@ -8,7 +8,12 @@ import { CountryFlagItem } from "../CountryFlagItem";
 
 import PropTypes from "prop-types";
 
-export const OpenSourceCard = ({ item, buttonItems, onJoin }) => {
+export const OpenSourceCard = ({
+  item,
+  buttonItems = null,
+  onJoin = null,
+  footer = false,
+}) => {
   return (
     <Card
       key={item.id}
@@ -21,14 +26,16 @@ export const OpenSourceCard = ({ item, buttonItems, onJoin }) => {
         />
       }
       footer={
-        <SplitButton
-          label="Entrar"
-          icon="pi pi-link"
-          className={item.buttonClassname}
-          onClick={() => onJoin(item)}
-          model={buttonItems(item)}
-          rounded
-        />
+        footer && (
+          <SplitButton
+            label="Entrar"
+            icon="pi pi-link"
+            className={item.buttonClassname}
+            onClick={() => onJoin(item)}
+            model={buttonItems(item)}
+            rounded
+          />
+        )
       }
       className="md:w-25rem mr-2 mt-2"
     >
@@ -52,6 +59,6 @@ export const OpenSourceCard = ({ item, buttonItems, onJoin }) => {
 
 OpenSourceCard.propTypes = {
   item: PropTypes.object.isRequired,
-  buttonItems: PropTypes.any.isRequired,
-  onJoin: PropTypes.func.isRequired,
+  buttonItems: PropTypes.any,
+  onJoin: PropTypes.func,
 };

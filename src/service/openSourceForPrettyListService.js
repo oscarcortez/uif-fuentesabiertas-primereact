@@ -23,6 +23,16 @@ class openSourceForPrettyListService {
     return response.data;
   }
 
+  async findByOpenSourceId(openSourceId) {
+    const response = await axios.get(
+      `${API_ENDPOINTS.opensources_for_pretty_list_for_item_view}/${openSourceId}`,
+      {
+        headers: this.getHeaders,
+      }
+    );
+    return response.data;
+  }
+
   async findAllByStatus(status) {
     const response = await axios.get(
       `${API_ENDPOINTS.opensources_find_all_by_status}/${status}`,

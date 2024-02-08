@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
-// import { useRef, useState } from "react";
-// import { useFormik } from "formik";
+import classNames from "classnames";
+
 import { Editor } from "primereact/editor";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
@@ -10,11 +10,6 @@ import { InputSwitch } from "primereact/inputswitch";
 import { Panel } from "primereact/panel";
 import { Toast } from "primereact/toast";
 import { Divider } from "primereact/divider";
-// import { useNavigate } from "react-router-dom";
-// import { BreadCrumb } from "primereact/breadcrumb";
-import classNames from "classnames";
-// import ReactCountryFlag from "react-country-flag";
-// import { useEffect } from "react";
 
 export const OpenSourceForm = ({
   labels,
@@ -58,8 +53,6 @@ export const OpenSourceForm = ({
 
   return (
     <>
-      <h3 className="ml-3 text-gray-600">Nueva Fuente Abierta</h3>
-      <Divider />
       <form
         onSubmit={formik.handleSubmit}
         className="pages-panel card flex flex-column"
