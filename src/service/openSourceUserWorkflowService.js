@@ -21,6 +21,20 @@ class openSourceUserWorkflowService {
     return response.data;
   }
 
+  async findBySession(nroPage = 1, pageSize = 50) {
+    const response = await axios.get(
+      API_ENDPOINTS.opensources_user_workflow_page_by_session,
+      {
+        headers: this.getHeaders,
+        params: {
+          page: nroPage,
+          size: pageSize,
+        },
+      }
+    );
+    return response.data;
+  }
+
   async create(payload) {
     const response = await axios.post(
       API_ENDPOINTS.opensources_user_workflow,

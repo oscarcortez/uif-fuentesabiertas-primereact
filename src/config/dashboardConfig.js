@@ -41,6 +41,11 @@ const leftbarItemsCliente = [
         icon: "pi pi-fw pi-th-large",
         navigate: "/open-source-pretty-list",
       },
+      {
+        label: "Mis Solicitudes",
+        icon: "pi pi-fw pi-th-large",
+        navigate: "/open-source-user-workflow-by-session",
+      },
     ],
   },
 ];
