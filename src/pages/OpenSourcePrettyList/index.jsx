@@ -57,7 +57,8 @@ export const OpenSourcePrettyList = () => {
           workflowId: 0,
         };
         createBySessionMutation.mutate(payload, {
-          onSuccess: (data) => {
+          onSuccess: () => {
+            //data
             //showSuccess(toast, labels.success, payload.openSourceId);
             console.log("send", payload.openSourceId);
           },

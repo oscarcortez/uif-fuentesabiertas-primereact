@@ -61,4 +61,5 @@ OpenSourceCard.propTypes = {
   item: PropTypes.object.isRequired,
   buttonItems: PropTypes.any,
   onJoin: PropTypes.func,
+  footer: PropTypes.bool,
 };
