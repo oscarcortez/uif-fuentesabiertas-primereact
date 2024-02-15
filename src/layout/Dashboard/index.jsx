@@ -7,6 +7,7 @@ import { TopNavbar } from "./TopNavbar";
 import { LeftbarAndContent } from "./LeftbarAndContent";
 
 import "./index.css";
+import { useCountryStore } from "../../stores/countryStore"; // Replace "path/to/countryStore" with the actual path to the module
 
 export const Dashboard = ({
   children,
@@ -19,22 +20,17 @@ export const Dashboard = ({
   const [visibleRightBar, setVisibleRightBar] = useState(false);
   const [visibleLeftBar, setVisibleLeftBar] = useState(false);
 
-  const iconRole = {
-    Administrador: "pi-lock-open",
-    Supervisor: "pi-users",
-    Cliente: "pi-user",
-  };
+  const countryCodeStore = useCountryStore((state) => state.code);
 
   return (
     <>
       <TopNavbar
         leftPopupIcon={topbarItems.leftPopupIcon}
         title={topbarItems.title}
-        rightPopupIcon={iconRole[userRole]}
         onClickForLeftBar={() => setVisibleLeftBar(true)}
         onClickForRightbar={() => setVisibleRightBar(true)}
         username={username}
-        userRole={userRole}
+        countryCode={countryCodeStore}
       />
       <PopupLeftbar
         visible={visibleLeftBar}
@@ -64,4 +60,5 @@ Dashboard.propTypes = {
   leftbarItems: PropTypes.array.isRequired,
   rightbarItems: PropTypes.object.isRequired,
   username: PropTypes.string.isRequired,
+  userRole: PropTypes.string.isRequired,
 };

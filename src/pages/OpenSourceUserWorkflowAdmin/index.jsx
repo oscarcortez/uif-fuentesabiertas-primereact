@@ -9,6 +9,7 @@ import { Dropdown } from "primereact/dropdown";
 import { TitlePage } from "../../components/TitlePage";
 
 import ReactCountryFlag from "react-country-flag";
+import { useCountryStore } from "../../stores/countryStore";
 
 import openSourceUserWorkflowService from "../../service/openSourceUserWorkflowService";
 import catalogService from "../../service/catalogService";
@@ -21,6 +22,8 @@ export const OpenSourceUserWorkflowAdmin = () => {
   });
 
   const [catalogWorkflow, setCatalogWorkflow] = useState([]);
+
+  const countryCodeStore = useCountryStore((state) => state.code);
 
   useEffect(() => {
     (async () => {
@@ -41,10 +44,10 @@ export const OpenSourceUserWorkflowAdmin = () => {
   useEffect(() => {
     (async () => {
       setOpenSourceUserWorkflowListActive(
-        await openSourceUserWorkflowService.findAll()
+        await openSourceUserWorkflowService.findAllByCountry(countryCodeStore)
       );
     })();
-  }, []);
+  }, [countryCodeStore]);
 
   const handleCatalogueWorkflowChange = (e, rowData) => {
     console.log("e.value", e.value);
@@ -63,7 +66,7 @@ export const OpenSourceUserWorkflowAdmin = () => {
           //(data)
           (async () => {
             setOpenSourceUserWorkflowListActive(
-              await openSourceUserWorkflowService.findAll()
+              await openSourceUserWorkflowService.findAllByCountry("BO")
             );
           })();
           console.log("update success");
@@ -85,11 +88,7 @@ export const OpenSourceUserWorkflowAdmin = () => {
         <TitlePage title={title} />
         <div className="p-col-12">
           <DataTable
-            value={
-              openSourceUserWorkflowListActive.data
-                ? openSourceUserWorkflowListActive.data.dataList
-                : []
-            }
+            value={openSourceUserWorkflowListActive || []}
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             dataKey="id"
             ref={dt}

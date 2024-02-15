@@ -41,7 +41,7 @@ export const OpenSourcePrettyList = () => {
   useEffect(() => {
     (async () => {
       setOpenSourceForPrettyList(
-        await openSourceForPrettyListService.findAllBySessionAndFree()
+        await openSourceForPrettyListService.findAllBySessionAndFree("BO")
       );
     })();
   }, []);
@@ -112,7 +112,7 @@ export const OpenSourcePrettyList = () => {
       <BreadCrumb model={breadcrumbItems} home={home} className="text-sm" />
       <TitlePage title={title} />
       <DataView
-        value={openSourceForPrettyList?.data || []}
+        value={openSourceForPrettyList || []}
         layout="grid"
         itemTemplate={(item) => (
           <OpenSourceCard

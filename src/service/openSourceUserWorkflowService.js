@@ -18,7 +18,28 @@ class openSourceUserWorkflowService {
         },
       }
     );
+    console.log("response", response.data.data.dataList);
     return response.data;
+  }
+
+  async findAllByCountry(countryCode, nroPage = 1, pageSize = 50) {
+    const response = await axios.get(
+      API_ENDPOINTS.opensources_user_workflow_page,
+      {
+        headers: this.getHeaders,
+        params: {
+          page: nroPage,
+          size: pageSize,
+        },
+      }
+    );
+    console.log("response", response.data.data.dataList);
+    if (countryCode !== "ES")
+      return response.data.data.dataList.filter(
+        (item) => item.openSource.countryCode === countryCode
+      );
+
+    return response.data.data.dataList;
   }
 
   async findBySession(nroPage = 1, pageSize = 50) {
