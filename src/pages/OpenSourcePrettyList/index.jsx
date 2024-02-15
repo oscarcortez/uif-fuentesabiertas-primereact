@@ -13,6 +13,7 @@ import openSourceUserWorkflowService from "../../service/openSourceUserWorkflowS
 import { getUsername } from "../../service/authenticateService";
 
 import { TitlePage } from "../../components/TitlePage";
+import { useCountryStore } from "../../stores/countryStore";
 
 import "./index.css";
 
@@ -31,6 +32,8 @@ export const OpenSourcePrettyList = () => {
   const title = "Publicaciones - Fuentes Abiertas ";
 
   const [openSourceForPrettyList, setOpenSourceForPrettyList] = useState([]);
+  const [typesForPrettyList, setTypesForPrettyList] = useState([]);
+  const countryCodeStore = useCountryStore((state) => state.code);
 
   const createUserExternalLinkMutation = useMutation({
     mutationFn: (payload) => {
@@ -41,11 +44,24 @@ export const OpenSourcePrettyList = () => {
   useEffect(() => {
     (async () => {
       setOpenSourceForPrettyList(
-        await openSourceForPrettyListService.findAllBySessionAndFree("BO")
+        await openSourceForPrettyListService.findAllBySessionAndFree(
+          countryCodeStore
+        )
       );
     })();
-  }, []);
+  }, [countryCodeStore]);
 
+  useEffect(() => {
+    (async () => {
+      setTypesForPrettyList(
+        await openSourceForPrettyListService.findTypesBySessionAndFree(
+          countryCodeStore
+        )
+      );
+    })();
+  }, [countryCodeStore]);
+
+  console.log("typesForPrettyList", typesForPrettyList);
   const buttonItems = (item) => [
     {
       label: "Solicitar suscripcion",
@@ -99,10 +115,12 @@ export const OpenSourcePrettyList = () => {
         // console.log("onJoin response", data);
         (async () => {
           setOpenSourceForPrettyList(
-            await openSourceForPrettyListService.findAll()
+            await openSourceForPrettyListService.findAllBySessionAndFree(
+              countryCodeStore
+            )
           );
         })();
-        //window.open(item.url, "_blank");
+        window.open(item.url, "_blank");
       },
     });
   };
@@ -111,18 +129,25 @@ export const OpenSourcePrettyList = () => {
     <>
       <BreadCrumb model={breadcrumbItems} home={home} className="text-sm" />
       <TitlePage title={title} />
-      <DataView
-        value={openSourceForPrettyList || []}
-        layout="grid"
-        itemTemplate={(item) => (
-          <OpenSourceCard
-            item={item}
-            buttonItems={buttonItems}
-            onJoin={onJoin}
-            footer
+      {typesForPrettyList.map((type, index) => (
+        <div key={index}>
+          <h4 className="ml-3 text-blue-300">{type}</h4>
+          <DataView
+            value={openSourceForPrettyList.filter(
+              (item) => item.typeSource === type
+            )}
+            layout="grid"
+            itemTemplate={(item) => (
+              <OpenSourceCard
+                item={item}
+                buttonItems={buttonItems}
+                onJoin={onJoin}
+                footer
+              />
+            )}
           />
-        )}
-      />
+        </div>
+      ))}
     </>
   );
 };

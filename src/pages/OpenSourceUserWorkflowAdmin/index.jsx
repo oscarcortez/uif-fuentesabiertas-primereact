@@ -66,7 +66,9 @@ export const OpenSourceUserWorkflowAdmin = () => {
           //(data)
           (async () => {
             setOpenSourceUserWorkflowListActive(
-              await openSourceUserWorkflowService.findAllByCountry("BO")
+              await openSourceUserWorkflowService.findAllByCountry(
+                countryCodeStore
+              )
             );
           })();
           console.log("update success");

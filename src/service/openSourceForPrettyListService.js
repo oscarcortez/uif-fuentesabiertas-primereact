@@ -58,6 +58,26 @@ class openSourceForPrettyListService {
     }
     return response.data.data;
   }
+
+  async findTypesBySessionAndFree(countryCode) {
+    const response = await axios.get(
+      API_ENDPOINTS.opensources_for_pretty_list_session_and_free,
+      {
+        headers: this.getHeaders,
+      }
+    );
+
+    if (countryCode !== "ES") {
+      return [
+        ...new Set(
+          response.data.data
+            .filter((item) => item.countryCode === countryCode)
+            .map((item) => item.typeSource)
+        ),
+      ];
+    }
+    return [...new Set(response.data.data.map((item) => item.typeSource))];
+  }
 }
 
 export default new openSourceForPrettyListService();
