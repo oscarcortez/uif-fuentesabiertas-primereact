@@ -25,7 +25,7 @@ export const API_ENDPOINTS = {
   opensources_for_pretty_list: `${BASE_URL}${API_VERSION}/opensources-for-pretty-list`,
   opensources_for_pretty_list_typelist: `${BASE_URL}${API_VERSION}/opensources-for-pretty-list/typeList`,
   opensources_for_pretty_list_session_and_free: `${BASE_URL}${API_VERSION}/opensources-for-pretty-list/session-and-free`,
-  opensources_for_pretty_list_for_item_view: `${BASE_URL}${API_VERSION}/opensources-for-pretty-list/page-by-userid`,
+  opensources_for_pretty_list_for_item_view: `${BASE_URL}${API_VERSION}/opensources-for-pretty-list/for-item-view`,
 
   opensources_user_external_link: `${BASE_URL}${API_VERSION}/opensources-user-external-link`,
 };

@@ -17,10 +17,12 @@ import { OpenSourceItem } from "./pages/OpenSourceItem";
 import { OpenSourceEdit } from "./pages/OpenSourceEdit";
 import { OpenSourceUserWorkflowAdmin } from "./pages/OpenSourceUserWorkflowAdmin";
 import { OpenSourceUserWorkflowBySession } from "./pages/OpenSourceUserWorkflowBySession";
+import { CountryList } from "./pages/CountryList";
 
 const router = createBrowserRouter([
-  { path: "/dashboard", element: <PrivateRoute component={Dashboard} /> },
   { path: "/login", element: <PublicRoute component={Login} /> },
+
+  { path: "/dashboard", element: <PrivateRoute component={Dashboard} /> },
   {
     path: "/open-source-new",
     element: <PrivateRoute component={OpenSourceNew} />,
@@ -48,6 +50,10 @@ const router = createBrowserRouter([
   {
     path: "/open-source-user-workflow-by-session",
     element: <PrivateRoute component={OpenSourceUserWorkflowBySession} />,
+  },
+  {
+    path: "/country-list",
+    element: <PrivateRoute component={CountryList} />,
   },
   { path: "/", element: <Navigate to="/login" replace /> },
 ]);
