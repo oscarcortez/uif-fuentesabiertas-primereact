@@ -4,6 +4,10 @@ import { useMutation } from "@tanstack/react-query";
 
 import { BreadCrumb } from "primereact/breadcrumb";
 import { DataView } from "primereact/dataview";
+import { TabView, TabPanel } from "primereact/tabview";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { Tooltip } from "primereact/tooltip";
 
 import { OpenSourceCard } from "../../components/OpenSourceCard";
 
@@ -51,6 +55,7 @@ export const OpenSourcePrettyList = () => {
     })();
   }, [countryCodeStore]);
 
+  console.log("openSourceForPrettyList", openSourceForPrettyList);
   useEffect(() => {
     (async () => {
       setTypesForPrettyList(
@@ -125,29 +130,89 @@ export const OpenSourcePrettyList = () => {
     });
   };
 
+  const openSourceLink = (rowData) => {
+    return (
+      <a
+        href={rowData.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-pr-tooltip={rowData.description}
+      >
+        Entrar
+      </a>
+    );
+  };
+
   return (
     <>
       <BreadCrumb model={breadcrumbItems} home={home} className="text-sm" />
       <TitlePage title={title} />
-      {typesForPrettyList.map((type, index) => (
-        <div key={index}>
-          <h4 className="ml-3 text-blue-300">{type}</h4>
-          <DataView
-            value={openSourceForPrettyList.filter(
-              (item) => item.typeSource === type
-            )}
-            layout="grid"
-            itemTemplate={(item) => (
-              <OpenSourceCard
-                item={item}
-                buttonItems={buttonItems}
-                onJoin={onJoin}
-                footer
+      <TabView>
+        <TabPanel header="Resumido">
+          {typesForPrettyList.map((type, index) => (
+            <div key={index}>
+              <h4 className="ml-3 text-blue-300">{type}</h4>
+              <DataView
+                value={openSourceForPrettyList.filter(
+                  (item) => item.typeSource === type
+                )}
+                layout="grid"
+                itemTemplate={(item) => (
+                  <OpenSourceCard
+                    item={item}
+                    buttonItems={buttonItems}
+                    onJoin={onJoin}
+                    footer
+                  />
+                )}
               />
-            )}
-          />
-        </div>
-      ))}
+            </div>
+          ))}
+        </TabPanel>
+        <TabPanel header="Tarjetas">
+          {typesForPrettyList.map((type, index) => (
+            <div key={index}>
+              <h4 className="ml-3 text-blue-300">{type}</h4>
+              {/* <DataView
+                value={openSourceForPrettyList.filter(
+                  (item) => item.typeSource === type
+                )}
+                layout="grid"
+                itemTemplate={(item) => (
+                  <OpenSourceCard
+                    item={item}
+                    buttonItems={buttonItems}
+                    onJoin={onJoin}
+                    footer
+                  />
+                )}
+              /> */}
+              <Tooltip
+                target=".customer-tooltip"
+                mouseTrack
+                mouseTrackTop={15}
+              />
+              <DataTable
+                value={openSourceForPrettyList.filter(
+                  (item) => item.typeSource === type
+                )}
+                tableStyle={{ minWidth: "50rem" }}
+              >
+                {/* <Column field="id" header="id"></Column> */}
+                {/* <Column field="description" header="description"></Column> */}
+                <Column field="url" header="url"></Column>
+                <Column
+                  field="name"
+                  header="Name"
+                  body={openSourceLink}
+                  className="customer-tooltip"
+                ></Column>
+                {/* <Column header="Acciones" body={openSourceLink}></Column> */}
+              </DataTable>
+            </div>
+          ))}
+        </TabPanel>
+      </TabView>
     </>
   );
 };
