@@ -51,8 +51,8 @@ const leftbarItemsCliente = [
 ];
 
 export const leftbarItems = {
-  Administrador: leftbarItemsAdministrador,
-  Cliente: leftbarItemsCliente,
+  ADMINISTRADOR: leftbarItemsAdministrador,
+  LECTOR: leftbarItemsCliente,
 };
 
 export const rightbarItems = {

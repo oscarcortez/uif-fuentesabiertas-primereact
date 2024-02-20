@@ -28,4 +28,6 @@ export const API_ENDPOINTS = {
   opensources_for_pretty_list_for_item_view: `${BASE_URL}${API_VERSION}/opensources-for-pretty-list/for-item-view`,
 
   opensources_user_external_link: `${BASE_URL}${API_VERSION}/opensources-user-external-link`,
+
+  users_find_by_session: `${BASE_URL}${API_VERSION}/users/find-by-session`,
 };
