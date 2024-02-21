@@ -1,0 +1,5 @@
+.custom-data-view {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}

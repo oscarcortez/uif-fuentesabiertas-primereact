@@ -12,6 +12,8 @@ import { Button } from "primereact/button";
 
 import { useNavigationStore } from "../../stores/navigationStore";
 
+import "./index.css";
+
 export const Dashboard = () => {
   const items = [{ label: "Fuentes Abiertas" }, { label: "Dashboard" }];
   const home = { icon: "pi pi-home", url: "/" };
@@ -64,6 +66,7 @@ export const Dashboard = () => {
       <DataView
         value={modules || []}
         layout="grid"
+        className="custom-data-view"
         itemTemplate={(item) => (
           <Card
             // title={item.title}
