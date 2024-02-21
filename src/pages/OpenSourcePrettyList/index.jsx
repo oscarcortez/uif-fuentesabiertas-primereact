@@ -8,6 +8,7 @@ import { TabView, TabPanel } from "primereact/tabview";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Tooltip } from "primereact/tooltip";
+import { Button } from "primereact/button";
 
 import { OpenSourceCard } from "../../components/OpenSourceCard";
 
@@ -131,24 +132,59 @@ export const OpenSourcePrettyList = () => {
   };
 
   const openSourceLink = (rowData) => {
-    return (
-      <a
-        href={rowData.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        data-pr-tooltip={rowData.description}
-      >
-        Entrar
-      </a>
-    );
+    if (rowData.typeList === "SIN ACCESO") return <p>Sin Acceso</p>;
+    else
+      return (
+        <Button
+          label="Entrar"
+          onClick={(e) => {
+            e.preventDefault();
+            window.open(rowData.url, "_blank", "noopener,noreferrer");
+          }}
+          className="p-2"
+          data-pr-tooltip={rowData.description}
+        />
+      );
   };
-
+  //groupRowsBy="representative.name"
   return (
     <>
       <BreadCrumb model={breadcrumbItems} home={home} className="text-sm" />
       <TitlePage title={title} />
       <TabView>
         <TabPanel header="Resumido">
+          {typesForPrettyList.map((type, index) => (
+            <div key={index}>
+              <h4 className="ml-3 text-blue-300">{type}</h4>
+              <Tooltip
+                target=".customer-tooltip"
+                mouseTrack
+                mouseTrackTop={15}
+              />
+              <DataTable
+                value={openSourceForPrettyList.filter(
+                  (item) => item.typeSource === type
+                )}
+                tableStyle={{ minWidth: "50rem" }}
+              >
+                {/* <Column field="id" header="id"></Column> */}
+                {/* <Column field="description" header="description"></Column> */}
+                <Column
+                  field="spacedUrl"
+                  header="url"
+                  style={{ maxWidth: "200px", overflow: "auto" }}
+                ></Column>
+                <Column
+                  header="Accion"
+                  body={openSourceLink}
+                  className="customer-tooltip"
+                ></Column>
+                {/* <Column header="Acciones" body={openSourceLink}></Column> */}
+              </DataTable>
+            </div>
+          ))}
+        </TabPanel>
+        <TabPanel header="Tarjetas">
           {typesForPrettyList.map((type, index) => (
             <div key={index}>
               <h4 className="ml-3 text-blue-300">{type}</h4>
@@ -166,49 +202,6 @@ export const OpenSourcePrettyList = () => {
                   />
                 )}
               />
-            </div>
-          ))}
-        </TabPanel>
-        <TabPanel header="Tarjetas">
-          {typesForPrettyList.map((type, index) => (
-            <div key={index}>
-              <h4 className="ml-3 text-blue-300">{type}</h4>
-              {/* <DataView
-                value={openSourceForPrettyList.filter(
-                  (item) => item.typeSource === type
-                )}
-                layout="grid"
-                itemTemplate={(item) => (
-                  <OpenSourceCard
-                    item={item}
-                    buttonItems={buttonItems}
-                    onJoin={onJoin}
-                    footer
-                  />
-                )}
-              /> */}
-              <Tooltip
-                target=".customer-tooltip"
-                mouseTrack
-                mouseTrackTop={15}
-              />
-              <DataTable
-                value={openSourceForPrettyList.filter(
-                  (item) => item.typeSource === type
-                )}
-                tableStyle={{ minWidth: "50rem" }}
-              >
-                {/* <Column field="id" header="id"></Column> */}
-                {/* <Column field="description" header="description"></Column> */}
-                <Column field="url" header="url"></Column>
-                <Column
-                  field="name"
-                  header="Name"
-                  body={openSourceLink}
-                  className="customer-tooltip"
-                ></Column>
-                {/* <Column header="Acciones" body={openSourceLink}></Column> */}
-              </DataTable>
             </div>
           ))}
         </TabPanel>

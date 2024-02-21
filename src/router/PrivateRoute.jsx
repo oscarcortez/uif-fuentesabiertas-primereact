@@ -31,7 +31,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   //console.log(user.roles[0].role.descripcion);
   //const role = getRole();
   const role = user?.roles?.[0]?.role?.descripcion.split(" ")[0] || "";
-
+  console.log("role", role);
   return isLoggedIn() ? (
     <>
       <Dashboard
