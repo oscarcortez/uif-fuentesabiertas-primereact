@@ -18,6 +18,7 @@ export const labels = {
   outputSearch: "Resultado de busqueda",
   price: "Precio",
   url: "Url",
+  name: "Nombre",
   typeSourceId: "Tipo de fuente",
   countryCodeHeader: "Pais",
   countryCodePlaceHolder: "Selecciona un pais",

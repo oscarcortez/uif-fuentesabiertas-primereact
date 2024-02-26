@@ -9,7 +9,6 @@ import { InputNumber } from "primereact/inputnumber";
 import { InputSwitch } from "primereact/inputswitch";
 import { Panel } from "primereact/panel";
 import { Toast } from "primereact/toast";
-import { Divider } from "primereact/divider";
 
 export const OpenSourceForm = ({
   labels,
@@ -20,37 +19,6 @@ export const OpenSourceForm = ({
   catalogWorkflow,
   catalogCountry,
 }) => {
-  // const countryTemplate = ({ code, name }) => {
-  //   return (
-  //     <div className="p-clearfix">
-  //       {code !== "" && (
-  //         <ReactCountryFlag countryCode={code} svg className="mr-2" />
-  //       )}
-
-  //       <span
-  //         style={{
-  //           float: "center",
-  //           margin: ".5em .25em 0 0",
-  //         }}
-  //       >
-  //         {name}
-  //       </span>
-  //     </div>
-  //   );
-  // };
-
-  // TODO fix it
-  // const selectedCountryTemplate = (option) => {
-  //   if (!option) return;
-
-  //   return (
-  //     <div className="p-clearfix">
-  //       <ReactCountryFlag countryCode={option.code} svg className="mr-2" />
-  //       <span>{option.name}</span>
-  //     </div>
-  //   );
-  // };
-
   return (
     <>
       <form
@@ -59,6 +27,23 @@ export const OpenSourceForm = ({
       >
         <div className="form-container">
           <div className="form-column">
+            <div className="p-inputgroup flex-1 mb-3">
+              <span className="p-inputgroup-addon">
+                <i className="pi pi-tag"></i>
+              </span>
+              <InputText
+                type="text"
+                id="name"
+                name="name"
+                placeholder={labels.name}
+                autoComplete="name"
+                {...formik.getFieldProps("name")}
+                className={classNames("w-full", {
+                  "p-invalid": formik.errors.name && formik.touched.name,
+                })}
+              />
+            </div>
+
             <div className="p-inputgroup flex-1 mb-3">
               <span className="p-inputgroup-addon">
                 <i className="pi pi-globe"></i>

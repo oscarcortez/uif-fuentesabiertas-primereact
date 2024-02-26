@@ -40,6 +40,7 @@ export const OpenSourceCard = ({
       className="md:w-25rem mr-2 mt-2"
     >
       <div className="m-0">
+        <LabelValue label="Name" value={item.name} />
         <LabelValue label="URL" value={item.spacedUrl} />
         <LabelValue
           label="Pais"

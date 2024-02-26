@@ -62,7 +62,7 @@ export const OpenSourceNew = () => {
         inputSearch: values.inputSearch,
         outputSearch: values.outputSearch,
         countryCode: values.countryCode.code,
-        //workflowId: parseInt(values.workflowId.code),
+        name: values.name,
         price: parseFloat(values.price),
         url: values.url,
         typeSourceId: parseInt(values.typeSourceId.code),

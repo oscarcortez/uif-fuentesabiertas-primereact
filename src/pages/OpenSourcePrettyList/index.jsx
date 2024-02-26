@@ -170,10 +170,15 @@ export const OpenSourcePrettyList = () => {
                 {/* <Column field="id" header="id"></Column> */}
                 {/* <Column field="description" header="description"></Column> */}
                 <Column
+                  field="name"
+                  header="Nombre"
+                  style={{ maxWidth: "200px", overflow: "auto" }}
+                ></Column>
+                {/* <Column
                   field="spacedUrl"
                   header="url"
                   style={{ maxWidth: "200px", overflow: "auto" }}
-                ></Column>
+                ></Column> */}
                 <Column
                   header="Accion"
                   body={openSourceLink}
