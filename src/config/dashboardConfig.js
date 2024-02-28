@@ -30,6 +30,37 @@ const leftbarItemsAdministrador = [
       },
     ],
   },
+  {
+    label: "INTERCAMBIO DE EXPERIENCIAS",
+    items: [
+      {
+        label: "Nuevo",
+        icon: "pi pi-fw pi-plus",
+        navigate: "/experience-exchange-new",
+      },
+      {
+        label: "Administrar",
+        icon: "pi pi-fw pi-list",
+        navigate: "/experience-exchange-admin",
+      },
+    ],
+  },
+
+  {
+    label: "INTERCAMBIO DE DOCUMENTACION",
+    items: [
+      {
+        label: "Nuevo",
+        icon: "pi pi-fw pi-plus",
+        navigate: "/documentation-exchange-new",
+      },
+      {
+        label: "Administrar",
+        icon: "pi pi-fw pi-list",
+        navigate: "/documentation-exchange-admin",
+      },
+    ],
+  },
 ];
 
 const leftbarItemsCliente = [

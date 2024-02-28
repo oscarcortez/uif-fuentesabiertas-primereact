@@ -1,5 +1,3 @@
-// import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
-
 import {
   Navigate,
   RouterProvider,
@@ -18,6 +16,12 @@ import { OpenSourceEdit } from "./pages/OpenSourceEdit";
 import { OpenSourceUserWorkflowAdmin } from "./pages/OpenSourceUserWorkflowAdmin";
 import { OpenSourceUserWorkflowBySession } from "./pages/OpenSourceUserWorkflowBySession";
 import { CountryList } from "./pages/CountryList";
+
+import { ExperienceExchangeNew } from "./pages/ExperienceExchangeNew";
+import { ExperienceExchangeAdmin } from "./pages/ExperienceExchangeAdmin";
+
+import { DocumentationExchangeNew } from "./pages/DocumentationExchangeNew";
+import { DocumentationExchangeAdmin } from "./pages/DocumentationExchangeAdmin";
 
 const router = createBrowserRouter([
   { path: "/login", element: <PublicRoute component={Login} /> },
@@ -54,6 +58,23 @@ const router = createBrowserRouter([
   {
     path: "/country-list",
     element: <PrivateRoute component={CountryList} />,
+  },
+  {
+    path: "/experience-exchange-new",
+    element: <PrivateRoute component={ExperienceExchangeNew} />,
+  },
+  {
+    path: "/experience-exchange-admin",
+    element: <PrivateRoute component={ExperienceExchangeAdmin} />,
+  },
+
+  {
+    path: "/documentation-exchange-new",
+    element: <PrivateRoute component={DocumentationExchangeNew} />,
+  },
+  {
+    path: "/documentation-exchange-admin",
+    element: <PrivateRoute component={DocumentationExchangeAdmin} />,
   },
   { path: "/", element: <Navigate to="/login" replace /> },
 ]);

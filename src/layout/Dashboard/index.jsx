@@ -7,7 +7,7 @@ import { TopNavbar } from "./TopNavbar";
 import { LeftbarAndContent } from "./LeftbarAndContent";
 
 import "./index.css";
-import { useCountryStore } from "../../stores/countryStore"; // Replace "path/to/countryStore" with the actual path to the module
+import { useCountryStore } from "../../stores/countryStore";
 
 export const Dashboard = ({
   children,
@@ -22,6 +22,7 @@ export const Dashboard = ({
 
   const countryCodeStore = useCountryStore((state) => state.code);
 
+  console.log("countryCodeStore", countryCodeStore);
   return (
     <>
       <TopNavbar
@@ -46,7 +47,39 @@ export const Dashboard = ({
         title={rightbarItems.title}
         languageItems={rightbarItems.languageItems}
       />
-      <LeftbarAndContent menuItems={leftbarItems}>{children}</LeftbarAndContent>
+      <LeftbarAndContent menuItems={leftbarItems} className="bg-red-300">
+        {/* <ReactCountryFlag
+          countryCode={countryCodeStore}
+          svg
+          style={{
+            width: "100%",
+            height: "40px",
+            objectFit: "fill",
+          }}
+        /> */}
+        <div
+          style={{
+            width: "100%",
+            height: "40px",
+            backgroundImage: `url(/country/${countryCodeStore}.png)`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "100% 40px",
+            backgroundPosition: "center",
+          }}
+          // className="bg-red-300"
+        >
+          {/* <ReactCountryFlag
+            countryCode={countryCodeStore}
+            svg
+            style={{
+              width: "800px",
+              height: "100%",
+            }}
+          /> */}
+        </div>
+
+        {children}
+      </LeftbarAndContent>
     </>
   );
 };
