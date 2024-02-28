@@ -19,6 +19,7 @@ import { CountryList } from "./pages/CountryList";
 
 import { ExperienceExchangeNew } from "./pages/ExperienceExchangeNew";
 import { ExperienceExchangeAdmin } from "./pages/ExperienceExchangeAdmin";
+import { ExperienceExchangeEdit } from "./pages/ExperienceExchangeEdit";
 
 import { DocumentationExchangeNew } from "./pages/DocumentationExchangeNew";
 import { DocumentationExchangeAdmin } from "./pages/DocumentationExchangeAdmin";
@@ -67,7 +68,6 @@ const router = createBrowserRouter([
     path: "/experience-exchange-admin",
     element: <PrivateRoute component={ExperienceExchangeAdmin} />,
   },
-
   {
     path: "/documentation-exchange-new",
     element: <PrivateRoute component={DocumentationExchangeNew} />,
@@ -75,6 +75,10 @@ const router = createBrowserRouter([
   {
     path: "/documentation-exchange-admin",
     element: <PrivateRoute component={DocumentationExchangeAdmin} />,
+  },
+  {
+    path: "/experience-exchange-edit/:id",
+    element: <PrivateRoute component={ExperienceExchangeEdit} />,
   },
   { path: "/", element: <Navigate to="/login" replace /> },
 ]);

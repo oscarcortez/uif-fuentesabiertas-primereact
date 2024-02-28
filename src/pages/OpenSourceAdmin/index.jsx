@@ -111,23 +111,6 @@ export const OpenSourceAdmin = () => {
       setOpenSourceListInactive(await openSourceService.findAllByStatus("I"));
     })();
   }, []);
-  //console.log("openSourceList", openSourceList);
-
-  const exportCSV = (selectionOnly) => {
-    dt.current.exportCSV({ selectionOnly });
-  };
-
-  const header = (
-    <div className="flex align-items-center justify-content-end gap-2">
-      <Button
-        type="button"
-        icon="pi pi-file"
-        rounded
-        onClick={() => exportCSV(false)}
-        data-pr-tooltip="CSV"
-      />
-    </div>
-  );
 
   return (
     <>
@@ -155,29 +138,6 @@ export const OpenSourceAdmin = () => {
               currentPageReportTemplate="Mostrando desde {first} hasta {last} de {totalRecords} fuentes abiertas"
               rows={10}
             >
-              {/* <Column field="id" header="ID" sortable></Column>
-              <Column
-                field="inputSearch"
-                header="Busquedas"
-                sortable
-                filter
-                filterPlaceholder="Por busqueda"
-              ></Column> */}
-              {/* <Column
-                field="isSuscribed"
-                header="Esta suscrito"
-                sortable
-                body={(rowData) => (rowData.isSuscribed ? "Si" : "No")}
-                filter
-                filterPlaceholder="Suscrito"
-              ></Column> */}
-              {/* <Column
-                field="price"
-                header="Precio $"
-                sortable
-                filter
-                filterPlaceholder="Precio"
-              ></Column> */}
               <Column
                 field="url"
                 header="Url"

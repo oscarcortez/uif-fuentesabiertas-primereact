@@ -31,5 +31,6 @@ export const API_ENDPOINTS = {
 
   users_find_by_session: `${BASE_URL}${API_VERSION}/users/find-by-session`,
 
-  experience_exchange: `${BASE_URL}${API_VERSION}/experience-exchange`,
+  experience_exchange: `${BASE_URL}${API_VERSION}/experienceexchange`,
+  experience_exchange_update_status: `${BASE_URL}${API_VERSION}/experienceexchange/update-status`,
 };

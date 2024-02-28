@@ -1,0 +1,9 @@
+.small-icon .pi {
+    font-size: 0.8em;
+}
+
+@media (max-width: 600px) {
+    .container .column {
+        flex: 100%;
+    }
+}
